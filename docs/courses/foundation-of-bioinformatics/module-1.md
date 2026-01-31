@@ -40,34 +40,34 @@
 
     ```mermaid
     graph TB
-        DNA["جزيء DNA في نواة خليتك"]
+        DNA["<b>جزيء DNA في نواة خليتك</b>"]
 
-        DNA --> A["حلزون مزدوج ثلاثي الأبعاد<br/>يلتف ويطوى"]
-        DNA --> B["ملفوف حول<br/>بروتينات الهيستون"]
-        DNA --> C["مُعدَّل كيميائياً<br/>علامات الميثيلة"]
-        DNA --> D["يُقرأ باستمرار<br/>بواسطة الآلية الجزيئية"]
-        DNA --> E["جزء من الكروموسوم 17<br/>موقع جين BRCA1"]
+        DNA --> A["<b>حلزون مزدوج ثلاثي الأبعاد</b><br/>يلتف ويطوى"]
+        DNA --> B["<b>ملفوف حول</b><br/>بروتينات الهيستون"]
+        DNA --> C["<b>مُعدَّل كيميائياً</b><br/>علامات الميثيلة"]
+        DNA --> D["<b>يُقرأ باستمرار</b><br/>بواسطة الآلية الجزيئية"]
+        DNA --> E["<b>جزء من الكروموسوم 17</b><br/>موقع جين BRCA1"]
 
-        style DNA fill:#009688,color:#fff
-        style A fill:#00BCD4
-        style B fill:#00BCD4
-        style C fill:#00BCD4
-        style D fill:#00BCD4
-        style E fill:#00BCD4
+        style DNA fill:#009688,color:#fff,font-size:18px
+        style A fill:#00BCD4,font-size:16px
+        style B fill:#00BCD4,font-size:16px
+        style C fill:#00BCD4,font-size:16px
+        style D fill:#00BCD4,font-size:16px
+        style E fill:#00BCD4,font-size:16px
     ```
 
     **الخطوة 2: الرحلة**
 
     ```mermaid
     graph LR
-        A["عينة دم<br/><small>فيزيائي</small>"] --> B["استخلاص DNA<br/><small>كيميائي</small>"]
-        B --> C["جهاز التسلسل<br/><small>إشارات بصرية</small>"]
-        C --> D["الكمبيوتر<br/><small>ملف رقمي</small>"]
+        A["<b>عينة دم</b><br/>فيزيائي"] --> B["<b>استخلاص DNA</b><br/>كيميائي"]
+        B --> C["<b>جهاز التسلسل</b><br/>إشارات بصرية"]
+        C --> D["<b>الكمبيوتر</b><br/>ملف رقمي"]
 
-        style A fill:#009688,color:#fff
-        style B fill:#00BCD4
-        style C fill:#FF9800
-        style D fill:#4CAF50
+        style A fill:#009688,color:#fff,font-size:17px
+        style B fill:#00BCD4,font-size:17px
+        style C fill:#FF9800,font-size:17px
+        style D fill:#4CAF50,color:#fff,font-size:17px
     ```
 
     **الخطوة 3: ما تحصل عليه كبيانات**
@@ -94,10 +94,16 @@
 
 ```mermaid
 graph LR
-    A["DNA<br/>الحمض النووي"] --> B["RNA<br/>الحمض النووي الريبوزي"]
-    B --> C["Protein<br/>البروتين"]
-    C --> D["Function<br/>الوظيفة"]
-    D --> E["Phenotype<br/>النمط الظاهري"]
+    A["<b>DNA</b><br/>الحمض النووي"] --> B["<b>RNA</b><br/>الحمض النووي الريبوزي"]
+    B --> C["<b>Protein</b><br/>البروتين"]
+    C --> D["<b>Function</b><br/>الوظيفة"]
+    D --> E["<b>Phenotype</b><br/>النمط الظاهري"]
+
+    style A fill:#009688,color:#fff,font-size:16px
+    style B fill:#00BCD4,font-size:16px
+    style C fill:#009688,color:#fff,font-size:16px
+    style D fill:#00BCD4,font-size:16px
+    style E fill:#FF9800,font-size:16px
 ```
 
 يمثل كل سهم:
