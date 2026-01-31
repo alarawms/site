@@ -1,0 +1,156 @@
+/* Language-Specific Direction Handling for Bilingual Site */
+/* Arabic is primary (root level) - RTL by default */
+/* English is secondary (/en/) - LTR via JavaScript */
+
+/* Direction is controlled by JavaScript (language-direction.js) */
+/* which sets dir="rtl" for Arabic or dir="ltr" for English */
+
+/* RTL Styles - Applied to Arabic pages (root, /blog/, /courses/) */
+[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+[dir="rtl"] body,
+[dir="rtl"] .md-content {
+  direction: rtl;
+  text-align: right;
+}
+
+/* LTR Styles - Applied to English pages (/en/) */
+[dir="ltr"] {
+  direction: ltr;
+  text-align: left;
+}
+
+[dir="ltr"] body,
+[dir="ltr"] .md-content {
+  direction: ltr;
+  text-align: left;
+}
+
+/* Keep programming code blocks LTR, but allow YAML/text to be RTL */
+[dir="rtl"] .language-python,
+[dir="rtl"] .language-bash,
+[dir="rtl"] .language-sh,
+[dir="rtl"] .language-javascript,
+[dir="rtl"] .language-js,
+[dir="rtl"] .language-java,
+[dir="rtl"] .language-c,
+[dir="rtl"] .language-cpp,
+[dir="rtl"] .language-sql,
+[dir="rtl"] .language-r,
+[dir="rtl"] .language-json {
+  direction: ltr;
+  text-align: left;
+}
+
+/* YAML and plain text blocks with Arabic content should be RTL */
+[dir="rtl"] .language-yaml,
+[dir="rtl"] .language-yaml pre,
+[dir="rtl"] .language-yaml code,
+[dir="rtl"] .language-text,
+[dir="rtl"] .language-text pre,
+[dir="rtl"] .language-text code {
+  direction: rtl !important;
+  text-align: right !important;
+  unicode-bidi: plaintext;
+}
+
+/* Plain code blocks without language identifier should also be RTL on Arabic pages */
+[dir="rtl"] .md-typeset pre > code:not([class*="language-"]) {
+  direction: rtl !important;
+  text-align: right !important;
+  unicode-bidi: plaintext;
+}
+
+/* Keep inline code LTR by default (usually technical terms) */
+[dir="rtl"] p code,
+[dir="rtl"] li code {
+  direction: ltr;
+  display: inline-block;
+}
+
+/* Adjust code block line numbers for RTL */
+[dir="rtl"] .highlight .linenodiv {
+  padding-left: 0.5em;
+  padding-right: 0;
+}
+
+/* Keep URLs and technical terms LTR */
+[dir="rtl"] .md-typeset a[href^="http"],
+[dir="rtl"] .md-typeset a[href^="https"] {
+  direction: ltr;
+  display: inline-block;
+}
+
+/* Better spacing for mixed Arabic/English content */
+[dir="rtl"] .md-typeset {
+  font-feature-settings: "kern" 1;
+}
+
+/* Keep table alignment proper in RTL */
+[dir="rtl"] .md-typeset table:not([align]) {
+  text-align: right;
+}
+
+[dir="rtl"] .md-typeset table:not([align]) th {
+  text-align: right;
+}
+
+/* Adjust admonition icons for RTL */
+[dir="rtl"] .md-typeset .admonition {
+  padding-right: 0.6rem;
+  padding-left: 1.2rem;
+  direction: rtl;
+  text-align: right;
+}
+
+/* Ensure admonition title and content are RTL */
+[dir="rtl"] .md-typeset .admonition-title {
+  direction: rtl;
+  text-align: right;
+}
+
+[dir="rtl"] .md-typeset .admonition p,
+[dir="rtl"] .md-typeset .admonition ul,
+[dir="rtl"] .md-typeset .admonition ol,
+[dir="rtl"] .md-typeset .admonition li {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Keep only actual programming code LTR (not YAML/text content) */
+[dir="rtl"] .md-typeset .admonition .language-python,
+[dir="rtl"] .md-typeset .admonition .language-python pre,
+[dir="rtl"] .md-typeset .admonition .language-python code,
+[dir="rtl"] .md-typeset .admonition .language-bash,
+[dir="rtl"] .md-typeset .admonition .language-bash pre,
+[dir="rtl"] .md-typeset .admonition .language-bash code,
+[dir="rtl"] .md-typeset .admonition .language-javascript,
+[dir="rtl"] .md-typeset .admonition .language-javascript pre,
+[dir="rtl"] .md-typeset .admonition .language-javascript code,
+[dir="rtl"] .md-typeset .admonition .language-sql,
+[dir="rtl"] .md-typeset .admonition .language-sql pre,
+[dir="rtl"] .md-typeset .admonition .language-sql code {
+  direction: ltr;
+  text-align: left;
+}
+
+/* YAML and text-based code blocks in admonitions should be RTL */
+[dir="rtl"] .md-typeset .admonition .language-yaml,
+[dir="rtl"] .md-typeset .admonition .language-yaml pre,
+[dir="rtl"] .md-typeset .admonition .language-yaml code,
+[dir="rtl"] .md-typeset .admonition .language-text,
+[dir="rtl"] .md-typeset .admonition .language-text pre,
+[dir="rtl"] .md-typeset .admonition .language-text code {
+  direction: rtl !important;
+  text-align: right !important;
+  unicode-bidi: plaintext;
+}
+
+/* Keep mermaid diagrams LTR */
+[dir="rtl"] .mermaid {
+  direction: ltr;
+  text-align: left;
+}

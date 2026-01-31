@@ -1,0 +1,51 @@
+# MkDocs build output
+site/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# Development and testing scripts
+serve.sh
+test_*.sh
+Makefile
+
+# Personal notes and documentation
+*_PLAN.md
+*_COMPLETE.md
+*_SETUP.md
+*_STRUCTURE.md
+*_TEST.md
+*_FIX*.md
+*_FIXES.md
+*_SUMMARY.md
+*_REPORT.md
+*_PROGRESS.md
+*_TRACKER.md
+*_UPDATE.md
+*_INDEX.md
+*_INSTRUCTIONS.md
+QUICK_START.md
+DIAGRAM_TEST.md
+
+# Backup directories
+*.backup.*
+docs.backup*/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# OS files
+Thumbs.db
