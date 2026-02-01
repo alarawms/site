@@ -42,18 +42,25 @@
     graph TB
         DNA["<b>جزيء DNA في نواة خليتك</b>"]
 
-        DNA --> A["<b>حلزون مزدوج ثلاثي الأبعاد</b><br/>يلتف ويطوى"]
-        DNA --> B["<b>ملفوف حول</b><br/>بروتينات الهيستون"]
-        DNA --> C["<b>مُعدَّل كيميائياً</b><br/>علامات الميثيلة"]
-        DNA --> D["<b>يُقرأ باستمرار</b><br/>بواسطة الآلية الجزيئية"]
-        DNA --> E["<b>جزء من الكروموسوم 17</b><br/>موقع جين BRCA1"]
+        DNA --> View1["<b>من ناحية البنية</b>"]
+        DNA --> View2["<b>من ناحية الكيمياء</b>"]
+        DNA --> View3["<b>من ناحية الوظيفة</b>"]
+        DNA --> View4["<b>من ناحية الموقع</b>"]
 
-        style DNA fill:#009688,color:#fff,font-size:18px
-        style A fill:#00BCD4,font-size:16px
-        style B fill:#00BCD4,font-size:16px
-        style C fill:#00BCD4,font-size:16px
-        style D fill:#00BCD4,font-size:16px
-        style E fill:#00BCD4,font-size:16px
+        View1 --> A["حلزون مزدوج ثلاثي الأبعاد<br/>ملفوف حول بروتينات الهيستون"]
+        View2 --> B["مُعدَّل بعلامات الميثيلة<br/>تنظيم إبيجيني"]
+        View3 --> C["يُقرأ باستمرار<br/>بواسطة الآلية الجزيئية"]
+        View4 --> D["جزء من الكروموسوم 17<br/>موقع جين BRCA1"]
+
+        style DNA fill:#004D40,color:#fff,font-size:18px
+        style View1 fill:#00695C,color:#fff,font-size:16px
+        style View2 fill:#00695C,color:#fff,font-size:16px
+        style View3 fill:#00695C,color:#fff,font-size:16px
+        style View4 fill:#00695C,color:#fff,font-size:16px
+        style A fill:#00796B,color:#fff,font-size:15px
+        style B fill:#00796B,color:#fff,font-size:15px
+        style C fill:#00796B,color:#fff,font-size:15px
+        style D fill:#00796B,color:#fff,font-size:15px
     ```
 
     **الخطوة 2: الرحلة**
@@ -64,10 +71,10 @@
         B --> C["<b>جهاز التسلسل</b><br/>إشارات بصرية"]
         C --> D["<b>الكمبيوتر</b><br/>ملف رقمي"]
 
-        style A fill:#009688,color:#fff,font-size:17px
-        style B fill:#00BCD4,font-size:17px
-        style C fill:#FF9800,font-size:17px
-        style D fill:#4CAF50,color:#fff,font-size:17px
+        style A fill:#004D40,color:#fff,font-size:17px
+        style B fill:#00695C,color:#fff,font-size:17px
+        style C fill:#E65100,color:#fff,font-size:17px
+        style D fill:#1B5E20,color:#fff,font-size:17px
     ```
 
     **الخطوة 3: ما تحصل عليه كبيانات**
@@ -99,11 +106,11 @@ graph LR
     C --> D["<b>Function</b><br/>الوظيفة"]
     D --> E["<b>Phenotype</b><br/>النمط الظاهري"]
 
-    style A fill:#009688,color:#fff,font-size:16px
-    style B fill:#00BCD4,font-size:16px
-    style C fill:#009688,color:#fff,font-size:16px
-    style D fill:#00BCD4,font-size:16px
-    style E fill:#FF9800,font-size:16px
+    style A fill:#004D40,color:#fff,font-size:16px
+    style B fill:#00695C,color:#fff,font-size:16px
+    style C fill:#004D40,color:#fff,font-size:16px
+    style D fill:#00695C,color:#fff,font-size:16px
+    style E fill:#E65100,color:#fff,font-size:16px
 ```
 
 يمثل كل سهم:
