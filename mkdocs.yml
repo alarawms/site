@@ -218,9 +218,9 @@ extra:
   comments:
     provider: giscus
     repo: alarawms/site
-    repo_id: REPLACE_WITH_YOUR_REPO_ID  # Get from https://giscus.app/ar
+    repo_id: R_kgDORFoiIQ 
     category: General
-    category_id: REPLACE_WITH_YOUR_CATEGORY_ID  # Get from https://giscus.app/ar
+    category_id: DIC_kwDORFoiIc4C1t3H
     reactions_enabled: true
     input_position: bottom
     theme:
