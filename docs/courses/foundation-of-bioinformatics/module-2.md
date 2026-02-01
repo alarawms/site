@@ -73,8 +73,6 @@ user@computer:~$
 
 **تشريح سطر الأوامر:**
 
-<div dir="ltr">
-
 ```
 user@computer:~/Documents$ pwd
 │    │        │           │
@@ -83,8 +81,6 @@ user@computer:~/Documents$ pwd
 │    └─> اسم الجهاز
 └─> اسم المستخدم
 ```
-
-</div>
 
 #### أول أمر لك
 
@@ -257,8 +253,6 @@ head genome_reads.fastq
 
 **النتيجة:**
 
-<div dir="ltr">
-
 ```
 @SRR001666.1
 GGTGCTTCTGGGCATCCTTGAGTTCAAGTCC
@@ -269,8 +263,6 @@ ATCGATCGATCGATCGATCGATCGATCGATC
 +
 HHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
 ```
-
-</div>
 
 #### عد الأسطر والكلمات
 
@@ -386,8 +378,6 @@ ls -l genome.fasta
 
 **النتيجة:**
 
-<div dir="ltr">
-
 ```
 -rw-r--r-- 1 user group 3200000 Jan 15 10:30 genome.fasta
 │││││││││
@@ -397,8 +387,6 @@ ls -l genome.fasta
 │└└└─ صلاحيات المالك (rw-)
 └─ نوع الملف (- = ملف عادي، d = مجلد)
 ```
-
-</div>
 
 **الصلاحيات:**
 - `r` = قراءة (read)
@@ -661,8 +649,6 @@ TTAAGGCCTTAA
 
     **النتيجة:**
 
-    <div dir="ltr">
-
     ```
     معلومات الملف: sequences.fasta
     ====================
@@ -670,8 +656,6 @@ TTAAGGCCTTAA
     عدد الأسطر: 6
     آخر تعديل: 2026-02-01 14:30:25
     ```
-
-    </div>
 
 ---
 

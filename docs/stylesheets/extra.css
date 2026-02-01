@@ -57,11 +57,10 @@
   unicode-bidi: plaintext;
 }
 
-/* Plain code blocks without language identifier should also be RTL on Arabic pages */
+/* Plain code blocks without language identifier should be LTR (technical content) */
 [dir="rtl"] .md-typeset pre > code:not([class*="language-"]) {
-  direction: rtl !important;
-  text-align: right !important;
-  unicode-bidi: plaintext;
+  direction: ltr !important;
+  text-align: left !important;
 }
 
 /* Keep inline code LTR by default (usually technical terms) */
