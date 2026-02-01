@@ -1,0 +1,10 @@
+chr1	1000	2000	promoter	BRCA1
+chr1	2001	5000	gene	BRCA1
+chr1	5001	5500	exon	BRCA1_exon1
+chr1	5501	6000	intron	BRCA1_intron1
+chr17	7000	8000	promoter	TP53
+chr17	8001	12000	gene	TP53
+chr17	12001	12500	exon	TP53_exon1
+chr7	50000	51000	promoter	EGFR
+chr7	51001	55000	gene	EGFR
+chr7	55001	55500	exon	EGFR_exon1
