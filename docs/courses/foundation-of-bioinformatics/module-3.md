@@ -2,831 +2,728 @@
 draft: true
 ---
 
-# الفصل الثالث: قواعد البيانات البيولوجية
-**الوصول إلى المعرفة البيولوجية العالمية**
+# الفصل الثالث: أساسيات البرمجة
+**لغة Python للمعلوماتية الحيوية**
 
-> **المفهوم الأساسي**: تبدأ معظم أبحاث المعلوماتية الحيوية باسترجاع البيانات. تحتوي قواعد البيانات البيولوجية العامة على معرفة متراكمة على مدى عقود—تعلم الوصول إليها برمجياً ضروري للأبحاث القابلة لإعادة الإنتاج.
+> **المفهوم الأساسي**: تتطلب المعلوماتية الحيوية مهارات حسابية للتعامل مع البيانات البيولوجية وتحليلها واستخراج الرؤى منها. Python توفر الأدوات—وأنت توفر التفكير البيولوجي.
 
 ---
 
 ## نظرة عامة على الفصل
 
-**المدة**: أسبوعان
-**المتطلبات الأساسية**: الفصل الثاني (Python وأساسيات Biopython)
-**مستوى البرمجة**: Python متوسط مع استخدام واجهات برمجة التطبيقات
+**المدة**: 3 أسابيع
+**المتطلبات الأساسية**: الفصل 1 (البيانات الحيوية)، الفصل 2 (أساسيات Linux)
+**مستوى البرمجة**: مناسب للمبتدئين (لا يلزم خبرة سابقة)
 
 ### أهداف التعلم
 
 بإكمال هذا الفصل، ستكون قادراً على:
 
-1. ✓ التنقل في قواعد البيانات البيولوجية الرئيسية وفهم أغراضها
-2. ✓ استخدام استراتيجيات بحث متقدمة للعثور على البيانات ذات الصلة
-3. ✓ استرجاع البيانات برمجياً باستخدام واجهات برمجة التطبيقات و Biopython
-4. ✓ فهم مخططات قواعد البيانات والإحالات المرجعية المتبادلة
-5. ✓ بناء خطوط أنابيب آلية لاسترجاع البيانات
-6. ✓ التعامل مع حدود المعدل والأخطاء والتحقق من صحة البيانات
-7. ✓ دمج البيانات من مصادر متعددة
+1. ✓ كتابة برامج Python للتعامل مع التسلسلات البيولوجية
+2. ✓ استخدام مكتبة Biopython للمهام الشائعة في المعلوماتية الحيوية
+3. ✓ تحليل ملفات بتنسيقات FASTA و FASTQ و GenBank
+4. ✓ الوصول إلى قواعد بيانات NCBI برمجياً باستخدام Entrez
+5. ✓ كتابة نصوص برمجية قابلة لإعادة الاستخدام وموثقة جيداً للمعلوماتية الحيوية
+6. ✓ تطبيق أفضل الممارسات للبيولوجيا الحسابية القابلة لإعادة الإنتاج
 
 ---
 
 ## المواضيع
 
-### 1. مشهد قواعد البيانات البيولوجية
+### 1. أساسيات Python
 
-#### 🌐 لماذا العديد من قواعد البيانات؟
+#### 🐍 لماذا Python للمعلوماتية الحيوية؟
 
-علم الأحياء معقد ومتعدد الأوجه. قواعد البيانات المختلفة تخدم أغراضاً مختلفة:
+**المزايا:**
+- ✓ **بناء جملة قابل للقراءة** - الكود يشبه الكود الوهمي
+- ✓ **نظام بيئي غني** - Biopython و NumPy و Pandas و Matplotlib
+- ✓ **تفاعلي** - اختبر الأفكار بسرعة في Jupyter notebooks
+- ✓ **مجتمع** - موارد واسعة للمعلوماتية الحيوية
 
-```mermaid
-graph TD
-    A["Biological Question<br/>سؤال بيولوجي"] --> B{"What Data Needed?<br/>ما البيانات المطلوبة؟"}
-    B -->|"Sequences<br/>تسلسلات"| C["NCBI/EBI"]
-    B -->|"Proteins<br/>بروتينات"| D["UniProt"]
-    B -->|"Structures<br/>هياكل"| E["PDB"]
-    B -->|"Literature<br/>أدبيات"| F["PubMed"]
-    B -->|"Variants<br/>متغيرات"| G["dbSNP/ClinVar"]
-    B -->|"Expression<br/>تعبير"| H["GEO/ArrayExpress"]
-```
-
-!!! info "فئات قواعد البيانات"
-    - **قواعد البيانات الأولية**: تخزن البيانات التجريبية الأصلية (GenBank، PDB)
-    - **قواعد البيانات الثانوية**: بيانات مشتقة/منسقة (UniProt، Pfam)
-    - **قواعد البيانات المتخصصة**: تركز على كائنات محددة أو أمراض أو أنواع بيانات
+!!! info "Python مقابل اللغات الأخرى"
+    - **R**: أفضل للإحصاء/التصور
+    - **Perl**: نصوص المعلوماتية الحيوية القديمة (يتم استبدالها)
+    - **Python**: أفضل توازن لسير عمل المعلوماتية الحيوية
 
 ---
 
-#### 📊 مزودو قواعد البيانات الرئيسيون
+#### 📦 أنواع البيانات للبيانات البيولوجية
 
-=== "NCBI (الولايات المتحدة)"
-    **المركز الوطني لمعلومات التكنولوجيا الحيوية**
+=== "النصوص (التسلسلات)"
+    ```python
+    # تسلسل DNA كنص
+    dna_seq = "ATGCGATCGTAGCTAGCT"
 
-    **قواعد البيانات الرئيسية:**
-    - GenBank: تسلسلات النيوكليوتيدات
-    - Protein: تسلسلات البروتين
-    - PubMed: الأدبيات الطبية الحيوية
-    - Gene: معلومات محورية عن الجينات
-    - GEO: بيانات تعبير الجينات
-    - SRA: أرشيف قراءات التسلسل (التسلسل الأولي)
-    - dbSNP: متعددات الأشكال النوكليوتيدية المفردة
-    - ClinVar: تفسيرات المتغيرات السريرية
+    # عمليات النصوص
+    length = len(dna_seq)  # 18
+    first_codon = dna_seq[0:3]  # "ATG"
+    gc_count = dna_seq.count('G') + dna_seq.count('C')  # 10
 
-    **الوصول الموحد:** نظام Entrez يربط جميع قواعد البيانات
+    # طرق النصوص
+    rna_seq = dna_seq.replace('T', 'U')  # "AUGCGAUCGUAGCUAGCU"
+    ```
 
-=== "EBI (أوروبا)"
-    **المعهد الأوروبي للمعلوماتية الحيوية**
+    **لماذا النصوص؟** التسلسلات البيولوجية هي بيانات نصية بطبيعتها
 
-    **قواعد البيانات الرئيسية:**
-    - ENA: الأرشيف الأوروبي للنيوكليوتيدات
-    - UniProt: تسلسلات ووظائف البروتين
-    - Ensembl: تعليقات الجينوم التوضيحية
-    - ArrayExpress: تعبير الجينات
-    - InterPro: عائلات ونطاقات البروتين
-    - ChEMBL: الجزيئات النشطة بيولوجياً
+=== "القوائم (المجموعات)"
+    ```python
+    # قائمة بأسماء الجينات
+    genes = ["BRCA1", "TP53", "EGFR", "MYC"]
 
-    **واجهات برمجة REST**: وصول حديث قائم على JSON
+    # عمليات القوائم
+    genes.append("KRAS")  # إضافة عنصر
+    genes.sort()  # ترتيب أبجدياً
+    first_gene = genes[0]  # الوصول بالفهرس
 
-=== "PDB (عالمي)"
-    **بنك بيانات البروتين**
+    # قائمة بقيم التعبير
+    expression = [145.3, 523.8, 189.2, 856.1]
+    mean_expr = sum(expression) / len(expression)
+    ```
 
-    **التركيز:** بيانات هيكلية ثلاثية الأبعاد
+    **لماذا القوائم؟** لتخزين قيم متعددة (أسماء جينات، عدادات، إحداثيات)
 
-    **يحتوي على:**
-    - هياكل بلورية بالأشعة السينية
-    - هياكل Cryo-EM
-    - هياكل NMR
-    - هياكل متوقعة (AlphaFold DB)
+=== "القواميس (الربط)"
+    ```python
+    # ربط أسماء الجينات بقيم التعبير
+    gene_expression = {
+        "BRCA1": 145.3,
+        "TP53": 523.8,
+        "EGFR": 189.2,
+        "MYC": 856.1
+    }
 
-    **الوصول:** RCSB PDB (الولايات المتحدة)، PDBe (أوروبا)، PDBj (اليابان)
+    # عمليات القواميس
+    brca1_expr = gene_expression["BRCA1"]  # 145.3
+    gene_expression["KRAS"] = 234.5  # إضافة إدخال جديد
 
----
+    # التحقق من وجود الجين
+    if "TP53" in gene_expression:
+        print(f"TP53 expression: {gene_expression['TP53']}")
+    ```
 
-### 2. نظام قواعد بيانات NCBI
-
-#### 🔍 Entrez: نظام البحث الشامل
-
-**Entrez** يربط جميع قواعد بيانات NCBI بلغة استعلام موحدة.
-
-**أمثلة على صيغة البحث:**
-
-```
-# البحث في PubMed
-CRISPR[Title] AND 2023[PDAT]
-
-# البحث عن جين
-BRCA1[Gene Name] AND "Homo sapiens"[Organism]
-
-# البحث عن نيوكليوتيد
-1000:2000[Sequence Length] AND genomic[Filter]
-
-# البحث عن بروتين
-hemoglobin[Protein Name] AND refseq[Filter]
-```
-
-!!! tip "علامات حقول البحث"
-    - `[Title]` - البحث في العنوان فقط
-    - `[Author]` - اسم المؤلف
-    - `[PDAT]` - تاريخ النشر
-    - `[Organism]` - الأنواع
-    - `[Gene Name]` - رمز الجين
-    - `[Filter]` - مرشحات خاصة بقاعدة البيانات
+    **لماذا القواميس؟** طبيعي للعلاقات مفتاح-قيمة (جين→تعبير، كودون→حمض أميني)
 
 ---
 
-#### 📚 قواعد بيانات NCBI الرئيسية
+#### 🔁 التحكم في التدفق
 
-##### GenBank (قاعدة بيانات النيوكليوتيدات)
-
-**ما تحتويه:**
-- جميع تسلسلات DNA/RNA المتاحة للعامة
-- أكثر من 400 مليون تسلسل
-- تحديثات يومية من الباحثين حول العالم
-
-**مثال: استرجاع التسلسلات**
+**اتخاذ القرارات مع البيانات البيولوجية:**
 
 ```python
-from Bio import Entrez, SeqIO
+def classify_gc_content(sequence):
+    """تصنيف التسلسل حسب محتوى GC."""
+    gc_count = sequence.count('G') + sequence.count('C')
+    gc_percent = (gc_count / len(sequence)) * 100
+
+    if gc_percent < 40:
+        return "AT-rich"
+    elif gc_percent < 60:
+        return "Balanced"
+    else:
+        return "GC-rich"
+
+# مثال
+seq = "ATGCGATCGTAGCTAGCT"
+classification = classify_gc_content(seq)
+print(f"Sequence is {classification}")  # "GC-rich"
+```
+
+**التكرار عبر البيانات البيولوجية:**
+
+```python
+# معالجة تسلسلات متعددة
+sequences = ["ATGCGT", "GCGCGC", "ATATAT"]
+
+for seq in sequences:
+    gc = classify_gc_content(seq)
+    print(f"{seq}: {gc}")
+
+# الإخراج:
+# ATGCGT: Balanced
+# GCGCGC: GC-rich
+# ATATAT: AT-rich
+```
+
+---
+
+#### 🔧 الدوال: أدوات المعلوماتية الحيوية القابلة لإعادة الاستخدام
+
+```python
+def reverse_complement(dna_seq):
+    """
+    إرجاع المتمم العكسي لتسلسل DNA.
+
+    Args:
+        dna_seq (str): تسلسل DNA (A, T, G, C)
+
+    Returns:
+        str: تسلسل المتمم العكسي
+
+    Example:
+        >>> reverse_complement("ATGC")
+        'GCAT'
+    """
+    # ربط المتممات
+    complement = {'A': 'T', 'T': 'A', 'G': 'C', 'C': 'G'}
+
+    # بناء المتمم
+    comp_seq = ''.join([complement[base] for base in dna_seq])
+
+    # العكس
+    return comp_seq[::-1]
+
+# اختبار
+original = "ATGCGATCG"
+rev_comp = reverse_complement(original)
+print(f"Original: {original}")
+print(f"RevComp:  {rev_comp}")
+```
+
+!!! tip "مبادئ تصميم الدوال"
+    1. **غرض واحد** - دالة واحدة، مهمة واحدة
+    2. **أسماء وصفية** - `reverse_complement` وليس `rc`
+    3. **وثائق** - اشرح ماذا ولماذا وكيف
+    4. **تلميحات الأنواع** - وثق أنواع الإدخال/الإخراج المتوقعة
+
+---
+
+### 2. Biopython: مكتبة المعلوماتية الحيوية
+
+#### 📚 مقدمة إلى Biopython
+
+**Biopython** توفر هياكل بيانات وأدوات لـ:
+- معالجة التسلسلات
+- تحليل تنسيقات الملفات (FASTA، GenBank، PDB)
+- الوصول إلى قواعد البيانات (NCBI، UniProt)
+- محاذاة التسلسلات
+- علم الوراثة العرقية
+
+**التثبيت:**
+```bash
+pip install biopython
+```
+
+---
+
+#### 🧬 كائنات Seq: أفضل من النصوص
+
+=== "استخدام Seq الأساسي"
+    ```python
+    from Bio.Seq import Seq
+
+    # إنشاء كائن Seq
+    dna_seq = Seq("ATGCGATCGTAGCTAGCT")
+
+    # عمليات بيولوجية
+    rna_seq = dna_seq.transcribe()
+    print(rna_seq)  # AUGCGAUCGUAGCUAGCU
+
+    # المتمم العكسي
+    rev_comp = dna_seq.reverse_complement()
+    print(rev_comp)  # AGCTAGCTACGATCGCAT
+
+    # الترجمة
+    protein = dna_seq.translate()
+    print(protein)  # MRSSS*
+    ```
+
+=== "لماذا Seq مقابل النص؟"
+    ```python
+    # قيود النصوص
+    dna_string = "ATGCGT"
+    # لا توجد طرق بيولوجية
+    # dna_string.transcribe()  # ❌ AttributeError
+
+    # مزايا Seq
+    dna_seq = Seq("ATGCGT")
+    rna_seq = dna_seq.transcribe()  # ✓ يعمل
+    protein = dna_seq.translate()    # ✓ يعمل
+
+    # Seq يتحقق من العمليات البيولوجية
+    protein_seq = Seq("MKTAYIAK")
+    # protein_seq.transcribe()  # ❌ خطأ: لا يمكن نسخ البروتين
+    ```
+
+=== "عمليات Seq"
+    ```python
+    from Bio.Seq import Seq
+
+    seq = Seq("ATGCGATCGTAGCT")
+
+    # عد النيوكليوتيدات
+    print(f"A: {seq.count('A')}")  # 3
+    print(f"G: {seq.count('G')}")  # 4
+
+    # محتوى GC
+    gc_content = (seq.count('G') + seq.count('C')) / len(seq)
+    print(f"GC%: {gc_content * 100:.1f}")  # 57.1%
+
+    # البحث عن أنماط
+    position = seq.find("TCG")
+    print(f"TCG found at position: {position}")  # 6
+
+    # التقطيع
+    first_codon = seq[0:3]  # ATG
+    second_codon = seq[3:6]  # CGA
+    ```
+
+---
+
+### 3. العمل مع تنسيقات الملفات البيولوجية
+
+#### 📄 تنسيق FASTA
+
+**الهيكل:**
+```
+>seq_id description
+ATGCGATCGTAGCTAGCTGATCGATCG
+TCGATCGATCGTACGATCGATCGATCG
+>another_seq more info
+GCGCGCGCGCGCGCGCGC
+```
+
+**تحليل FASTA:**
+
+```python
+from Bio import SeqIO
+
+# قراءة تسلسل واحد
+for record in SeqIO.parse("sequence.fasta", "fasta"):
+    print(f"ID: {record.id}")
+    print(f"Description: {record.description}")
+    print(f"Sequence: {record.seq}")
+    print(f"Length: {len(record)}")
+```
+
+**مثال عملي: التصفية حسب الطول**
+
+```python
+from Bio import SeqIO
+
+def filter_by_length(input_file, output_file, min_length):
+    """
+    تصفية التسلسلات حسب الحد الأدنى للطول.
+
+    Args:
+        input_file: ملف FASTA الإدخال
+        output_file: ملف FASTA الإخراج
+        min_length: الحد الأدنى لطول التسلسل
+    """
+    sequences = []
+
+    for record in SeqIO.parse(input_file, "fasta"):
+        if len(record.seq) >= min_length:
+            sequences.append(record)
+
+    # كتابة التسلسلات المصفاة
+    SeqIO.write(sequences, output_file, "fasta")
+    print(f"Kept {len(sequences)} sequences >= {min_length} bp")
+
+# مثال الاستخدام
+filter_by_length("all_seqs.fasta", "long_seqs.fasta", min_length=500)
+```
+
+---
+
+#### 🧬 تنسيق FASTQ (مع درجات الجودة)
+
+**الهيكل:**
+```
+@seq_id
+ATGCGATCGTAGCT
++
+IIIHHGGGFFFEEE
+```
+
+**درجات الجودة:**
+- أحرف ASCII تشفر الجودة (درجات Phred)
+- `I` = جودة عالية (Q=40، 99.99% دقة)
+- `E` = جودة أقل (Q=36، 99.97% دقة)
+
+**تحليل FASTQ:**
+
+```python
+from Bio import SeqIO
+
+for record in SeqIO.parse("reads.fastq", "fastq"):
+    print(f"ID: {record.id}")
+    print(f"Sequence: {record.seq}")
+
+    # درجات الجودة (درجات Phred)
+    qualities = record.letter_annotations["phred_quality"]
+    mean_quality = sum(qualities) / len(qualities)
+    print(f"Mean quality: {mean_quality:.1f}")
+```
+
+**تصفية الجودة:**
+
+```python
+def filter_by_quality(input_fastq, output_fastq, min_quality=30):
+    """الاحتفاظ بالقراءات عالية الجودة فقط."""
+    high_quality = []
+
+    for record in SeqIO.parse(input_fastq, "fastq"):
+        qualities = record.letter_annotations["phred_quality"]
+        mean_qual = sum(qualities) / len(qualities)
+
+        if mean_qual >= min_quality:
+            high_quality.append(record)
+
+    SeqIO.write(high_quality, output_fastq, "fastq")
+    print(f"Kept {len(high_quality)} high-quality reads")
+```
+
+---
+
+#### 🧬 تنسيق GenBank (تعليقات توضيحية غنية)
+
+**GenBank يحتوي على:**
+- التسلسل
+- الميزات (جينات، CDS، محفزات)
+- المراجع
+- معلومات الكائن الحي
+
+**تحليل GenBank:**
+
+```python
+from Bio import SeqIO
+
+# قراءة ملف GenBank
+record = SeqIO.read("NC_000913.gb", "genbank")
+
+print(f"ID: {record.id}")
+print(f"Description: {record.description}")
+print(f"Organism: {record.annotations['organism']}")
+print(f"Sequence length: {len(record.seq)}")
+
+# استخراج الميزات
+for feature in record.features:
+    if feature.type == "CDS":  # تسلسل الترميز
+        gene_name = feature.qualifiers.get('gene', ['Unknown'])[0]
+        location = feature.location
+        print(f"Gene {gene_name} at {location}")
+```
+
+---
+
+### 4. الوصول البرمجي إلى NCBI
+
+#### 🌐 Entrez: واجهة برمجة NCBI
+
+**ما هو Entrez؟**
+- واجهة برمجة موحدة لجميع قواعد بيانات NCBI
+- وصول برمجي إلى GenBank و PubMed و SRA وغيرها
+- مجاني لكن يتطلب تسجيل البريد الإلكتروني
+
+**الإعداد:**
+
+```python
+from Bio import Entrez
+
+# دائماً اضبط بريدك الإلكتروني (مطلوب من NCBI)
+Entrez.email = "your.email@example.com"
+```
+
+!!! warning "سياسة استخدام NCBI"
+    - **قدم بريدك الإلكتروني** - مطلوب من NCBI
+    - **حدد الطلبات** - حد أقصى 3 في الثانية (10/ثانية مع مفتاح API)
+    - **استخدم Entrez.read()** - تحليل استجابات XML
+    - **خزن النتائج** - لا تعيد التنزيل دون داعٍ
+
+---
+
+#### 🔍 البحث في قواعد بيانات NCBI
+
+**مثال: البحث في PubMed**
+
+```python
+from Bio import Entrez
 
 Entrez.email = "your.email@example.com"
 
-# البحث عن BRCA1 البشري mRNA
-handle = Entrez.esearch(
-    db="nucleotide",
-    term="BRCA1[Gene] AND Homo sapiens[Organism] AND mRNA[Filter]",
-    retmax=5
-)
+# البحث في PubMed
+handle = Entrez.esearch(db="pubmed",
+                        term="CRISPR AND 2023[PDAT]",
+                        retmax=10)
+record = Entrez.read(handle)
+handle.close()
+
+print(f"Found {record['Count']} articles")
+print(f"First 10 PMIDs: {record['IdList']}")
+```
+
+**مثال: البحث في قاعدة بيانات النيوكليوتيدات**
+
+```python
+# البحث عن تسلسلات BRCA1
+handle = Entrez.esearch(db="nucleotide",
+                        term="BRCA1[Gene] AND Homo sapiens[Organism]",
+                        retmax=5)
 record = Entrez.read(handle)
 handle.close()
 
 print(f"Found {record['Count']} sequences")
-print(f"IDs: {record['IdList']}")
-
-# جلب التسلسل الأول
-handle = Entrez.efetch(
-    db="nucleotide",
-    id=record['IdList'][0],
-    rettype="gb",
-    retmode="text"
-)
-
-seq_record = SeqIO.read(handle, "genbank")
-handle.close()
-
-print(f"Sequence ID: {seq_record.id}")
-print(f"Description: {seq_record.description}")
-print(f"Length: {len(seq_record.seq)} bp")
+for seq_id in record['IdList']:
+    print(f"  {seq_id}")
 ```
 
 ---
 
-##### PubMed (قاعدة بيانات الأدبيات)
+#### 📥 جلب السجلات من NCBI
 
-**ما تحتويه:**
-- أكثر من 35 مليون اقتباس طبي حيوي
-- ملخصات لمعظم المقالات
-- روابط للنص الكامل (عند توفره)
-
-**مثال: البحث في الأدبيات**
-
-```python
-from Bio import Entrez
-
-Entrez.email = "your.email@example.com"
-
-# البحث عن مقالات مراجعة CRISPR
-handle = Entrez.esearch(
-    db="pubmed",
-    term="CRISPR[Title] AND Review[Publication Type] AND 2023[PDAT]",
-    retmax=10,
-    sort="relevance"
-)
-record = Entrez.read(handle)
-handle.close()
-
-pmids = record['IdList']
-print(f"Found {len(pmids)} reviews")
-
-# جلب تفاصيل المقالات
-handle = Entrez.efetch(
-    db="pubmed",
-    id=pmids,
-    rettype="medline",
-    retmode="text"
-)
-
-articles = handle.read()
-handle.close()
-print(articles)
-```
-
----
-
-##### قاعدة بيانات الجينات
-
-**ما تحتويه:**
-- معلومات محورية عن الجينات
-- رموز الجينات والأوصاف والمواقع
-- روابط إلى التسلسلات والمنشورات والمسارات
-- بيانات تعبير الجينات
-
-**مثال: معلومات الجين**
-
-```python
-from Bio import Entrez
-
-Entrez.email = "your.email@example.com"
-
-# البحث عن جين BRCA1
-handle = Entrez.esearch(
-    db="gene",
-    term="BRCA1[Gene Name] AND Homo sapiens[Organism]"
-)
-record = Entrez.read(handle)
-handle.close()
-
-gene_id = record['IdList'][0]
-
-# جلب معلومات الجين التفصيلية
-handle = Entrez.efetch(
-    db="gene",
-    id=gene_id,
-    retmode="xml"
-)
-
-gene_data = Entrez.read(handle)
-handle.close()
-
-# استخراج المعلومات
-gene = gene_data[0]
-print(f"Gene Symbol: {gene['Entrezgene_gene']['Gene-ref']['Gene-ref_locus']}")
-print(f"Description: {gene['Entrezgene_gene']['Gene-ref']['Gene-ref_desc']}")
-print(f"Chromosome: {gene.get('Entrezgene_chromosome', 'N/A')}")
-```
-
----
-
-##### GEO (مخزن تعبير الجينات)
-
-**ما يحتويه:**
-- مجموعات بيانات تعبير الجينات
-- بيانات المصفوفة الدقيقة
-- بيانات RNA-seq
-- بيانات ChIP-seq
-
-**مثال: تصفح مجموعة بيانات GEO**
-
-```python
-from Bio import Entrez
-
-Entrez.email = "your.email@example.com"
-
-# البحث عن مجموعات بيانات RNA-seq لسرطان الثدي
-handle = Entrez.esearch(
-    db="gds",
-    term="breast cancer[Title] AND RNA-seq[Filter]",
-    retmax=5
-)
-record = Entrez.read(handle)
-handle.close()
-
-print(f"Found {record['Count']} datasets")
-for gds_id in record['IdList']:
-    print(f"GDS ID: {gds_id}")
-```
-
-!!! warning "مجموعات بيانات كبيرة"
-    يمكن أن تكون مجموعات بيانات GEO ضخمة (جيجابايتات). استخدم واجهة الويب أولاً لفهم هيكل البيانات قبل التنزيل برمجياً.
-
----
-
-### 3. UniProt: قاعدة معرفة البروتين
-
-#### 🧬 تنظيم UniProt
-
-UniProt مقسمة إلى قسمين:
-
-```
-UniProt
-├── Swiss-Prot (منسق)
-│   ├── مشروح يدوياً
-│   ├── جودة عالية
-│   └── ~570,000 إدخال
-└── TrEMBL (آلي)
-    ├── مشروح حاسوبياً
-    ├── ثقة أقل
-    └── ~240 مليون إدخال
-```
-
----
-
-#### 🔎 البحث والاسترجاع في UniProt
-
-**ميزات واجهة الويب:**
-- منشئ استعلامات متقدم
-- التصفية حسب الكائن الحي والدليل ودرجة التعليق
-- التنزيل بتنسيقات متعددة (FASTA، XML، TSV)
-
-**مثال: الوصول البرمجي**
-
-```python
-import requests
-
-def search_uniprot(query, format='fasta'):
-    """
-    البحث في UniProt واسترجاع النتائج.
-
-    Args:
-        query: سلسلة استعلام UniProt
-        format: تنسيق الإخراج (fasta, tab, xml)
-
-    Returns:
-        نص الاستجابة
-    """
-    url = "https://rest.uniprot.org/uniprotkb/search"
-
-    params = {
-        'query': query,
-        'format': format,
-        'size': 10  # حد النتائج
-    }
-
-    response = requests.get(url, params=params)
-
-    if response.ok:
-        return response.text
-    else:
-        raise Exception(f"UniProt request failed: {response.status_code}")
-
-# مثال: البحث عن كينازات بشرية
-query = "organism_id:9606 AND (protein_name:kinase)"
-results = search_uniprot(query, format='tab')
-print(results)
-```
-
----
-
-#### 📋 هيكل إدخال UniProt
-
-كل إدخال UniProt يحتوي على:
-
-```
-معلومات الإدخال:
-├── التسلسل
-├── الوظيفة (مصطلحات GO، الكلمات المفتاحية)
-├── الموقع تحت الخلوي
-├── التفاعلات بروتين-بروتين
-├── التعديلات ما بعد الترجمة
-├── ارتباطات الأمراض
-├── المعلومات الهيكلية
-├── الإحالات المرجعية المتبادلة (PDB، GenBank، إلخ)
-└── الاقتباسات الأدبية
-```
-
-**مثال: جلب بروتين معين**
-
-```python
-import requests
-
-def get_uniprot_entry(accession):
-    """الحصول على إدخال UniProt بواسطة رقم الانضمام."""
-    url = f"https://rest.uniprot.org/uniprotkb/{accession}.txt"
-
-    response = requests.get(url)
-
-    if response.ok:
-        return response.text
-    else:
-        raise Exception(f"Entry {accession} not found")
-
-# مثال: مثبط الورم البشري p53
-p53_data = get_uniprot_entry("P04637")
-print(p53_data[:500])  # طباعة أول 500 حرف
-```
-
----
-
-### 4. PDB: قاعدة بيانات هيكل البروتين
-
-#### 🏗️ ما يحتويه PDB
-
-**بيانات هيكلية:**
-- أكثر من 200,000 هيكل تجريبي
-- بلورة بالأشعة السينية (الأغلبية)
-- Cryo-EM (تنمو بسرعة)
-- هياكل NMR
-- هياكل متوقعة من AlphaFold (قاعدة بيانات منفصلة)
-
----
-
-#### 🔍 استراتيجيات البحث في PDB
-
-=== "بواسطة اسم البروتين"
-    ```python
-    from Bio.PDB import PDBList
-
-    pdbl = PDBList()
-
-    # تنزيل الهيكل بواسطة المعرف
-    pdbl.retrieve_pdb_file('1HHO', pdir='.', file_format='pdb')
-    # 1HHO هو هيكل الهيموجلوبين
-    ```
-
-=== "بواسطة تشابه التسلسل"
-    ```python
-    import requests
-
-    def search_pdb_by_sequence(sequence):
-        """البحث في PDB باستخدام تشابه تسلسل BLAST."""
-        url = "https://search.rcsb.org/rcsbsearch/v2/query"
-
-        query = {
-            "query": {
-                "type": "terminal",
-                "service": "sequence",
-                "parameters": {
-                    "evalue_cutoff": 0.1,
-                    "identity_cutoff": 0.9,
-                    "sequence_type": "protein",
-                    "value": sequence
-                }
-            },
-            "return_type": "entry"
-        }
-
-        response = requests.post(url, json=query)
-        return response.json()
-
-    # مثال البحث
-    seq = "MVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTT"
-    results = search_pdb_by_sequence(seq)
-    ```
-
-=== "بواسطة الدقة"
-    ```python
-    import requests
-
-    def search_high_resolution_structures(max_resolution=2.0):
-        """العثور على هياكل عالية الدقة."""
-        url = "https://search.rcsb.org/rcsbsearch/v2/query"
-
-        query = {
-            "query": {
-                "type": "terminal",
-                "service": "text",
-                "parameters": {
-                    "attribute": "rcsb_entry_info.resolution_combined",
-                    "operator": "less_or_equal",
-                    "value": max_resolution
-                }
-            },
-            "return_type": "entry"
-        }
-
-        response = requests.post(url, json=query)
-        return response.json()
-    ```
-
----
-
-#### 📐 تحليل ملفات PDB
-
-```python
-from Bio.PDB import PDBParser, PDBIO
-
-# تحليل ملف PDB
-parser = PDBParser()
-structure = parser.get_structure("protein", "1hho.pdb")
-
-# استخراج المعلومات
-for model in structure:
-    for chain in model:
-        print(f"Chain {chain.id}:")
-        residues = list(chain.get_residues())
-        print(f"  Residues: {len(residues)}")
-
-        # عد أنواع الذرات
-        atoms = list(chain.get_atoms())
-        print(f"  Atoms: {len(atoms)}")
-
-# حساب مركز الكتلة
-def center_of_mass(structure):
-    """حساب مركز الكتلة للهيكل."""
-    coords = []
-    for atom in structure.get_atoms():
-        coords.append(atom.coord)
-
-    import numpy as np
-    coords = np.array(coords)
-    return coords.mean(axis=0)
-
-com = center_of_mass(structure)
-print(f"Center of mass: {com}")
-```
-
----
-
-### 5. استراتيجيات دمج البيانات
-
-#### 🔗 الربط بين قواعد البيانات
-
-قواعد البيانات المختلفة تشير إلى بعضها البعض من خلال المعرفات:
-
-```
-معرف بروتين GenBank ─→ رقم انضمام UniProt ─→ معرف هيكل PDB
-      ↓                      ↓                     ↓
-   NP_000537              P04637                1TUP
-   (p53 RefSeq)        (p53 Swiss-Prot)    (هيكل p53)
-```
-
-**مثال: خط أنابيب متعدد قواعد البيانات**
+**جلب سجل GenBank:**
 
 ```python
 from Bio import Entrez, SeqIO
-import requests
 
 Entrez.email = "your.email@example.com"
 
-def gene_to_structure_pipeline(gene_name, organism):
-    """
-    استرجاع المعلومات من الجين إلى الهيكل.
+# جلب سجل GenBank
+handle = Entrez.efetch(db="nucleotide",
+                       id="NM_007294",  # BRCA1 mRNA
+                       rettype="gb",
+                       retmode="text")
 
-    خط الأنابيب:
-    1. العثور على الجين في قاعدة بيانات NCBI Gene
-    2. الحصول على تسلسل البروتين من GenBank
-    3. العثور على إدخال UniProt
-    4. البحث عن هياكل PDB
-    """
-    results = {}
+# تحليل كـ GenBank
+record = SeqIO.read(handle, "genbank")
+handle.close()
 
-    # الخطوة 1: العثور على الجين
-    print(f"1. البحث عن الجين: {gene_name}")
-    handle = Entrez.esearch(
-        db="gene",
-        term=f"{gene_name}[Gene Name] AND {organism}[Organism]"
-    )
-    gene_record = Entrez.read(handle)
-    handle.close()
+print(f"ID: {record.id}")
+print(f"Description: {record.description}")
+print(f"Length: {len(record.seq)} bp")
+print(f"Organism: {record.annotations['organism']}")
 
-    if gene_record['IdList']:
-        gene_id = gene_record['IdList'][0]
-        results['gene_id'] = gene_id
-        print(f"   وجد معرف الجين: {gene_id}")
-    else:
-        print("   لم يتم العثور على الجين")
-        return results
-
-    # الخطوة 2: الحصول على تسلسل البروتين
-    print("2. استرجاع تسلسل البروتين")
-    handle = Entrez.elink(
-        dbfrom="gene",
-        db="protein",
-        id=gene_id
-    )
-    link_record = Entrez.read(handle)
-    handle.close()
-
-    if link_record[0]['LinkSetDb']:
-        protein_ids = [link['Id'] for link in link_record[0]['LinkSetDb'][0]['Link']]
-        results['protein_ids'] = protein_ids[:3]  # أول 3
-        print(f"   وجد {len(protein_ids)} تسلسلات بروتين")
-
-    # الخطوة 3: البحث في UniProt (باستخدام اسم الجين)
-    print("3. البحث في UniProt")
-    query = f"gene:{gene_name} AND organism_name:{organism}"
-    uniprot_url = "https://rest.uniprot.org/uniprotkb/search"
-
-    response = requests.get(uniprot_url, params={'query': query, 'format': 'json', 'size': 1})
-
-    if response.ok:
-        data = response.json()
-        if data['results']:
-            uniprot_acc = data['results'][0]['primaryAccession']
-            results['uniprot'] = uniprot_acc
-            print(f"   وجد UniProt: {uniprot_acc}")
-
-    # الخطوة 4: البحث في PDB
-    print("4. البحث عن هياكل PDB")
-    pdb_url = "https://search.rcsb.org/rcsbsearch/v2/query"
-
-    pdb_query = {
-        "query": {
-            "type": "terminal",
-            "service": "text",
-            "parameters": {
-                "attribute": "rcsb_entity_source_organism.rcsb_gene_name.value",
-                "operator": "exact_match",
-                "value": gene_name
-            }
-        },
-        "return_type": "entry"
-    }
-
-    response = requests.post(pdb_url, json=pdb_query)
-    if response.ok:
-        pdb_data = response.json()
-        if 'result_set' in pdb_data:
-            pdb_ids = [hit['identifier'] for hit in pdb_data['result_set']]
-            results['pdb_ids'] = pdb_ids[:5]  # أول 5
-            print(f"   وجد {len(pdb_ids)} هياكل PDB")
-
-    return results
-
-# مثال الاستخدام
-results = gene_to_structure_pipeline("TP53", "Homo sapiens")
-print("\n=== نتائج خط الأنابيب ===")
-for key, value in results.items():
-    print(f"{key}: {value}")
+# استخراج ميزات CDS
+for feature in record.features:
+    if feature.type == "CDS":
+        print(f"Coding sequence: {feature.location}")
 ```
 
----
-
-### 6. أفضل الممارسات للوصول إلى قواعد البيانات
-
-#### ⚡ تحديد المعدل والوصول الأخلاقي
-
-!!! danger "قواعد حرجة"
-    1. **اضبط بريدك الإلكتروني**: استخدم دائماً `Entrez.email = "your@email.com"`
-    2. **احترم حدود المعدل**:
-       - NCBI: 3 طلبات/ثانية (10/ثانية مع مفتاح API)
-       - UniProt: لا يوجد حد صارم، لكن كن معقولاً
-       - PDB: لا يوجد حد صارم
-    3. **لا تطرق الخوادم**: أضف تأخيرات بين الطلبات
-    4. **خزن النتائج**: لا تعيد تنزيل نفس البيانات
-
-**مثال: استرجاع محدود المعدل**
+**التنزيل الدفعي:**
 
 ```python
-from Bio import Entrez
-import time
-
-Entrez.email = "your.email@example.com"
-
-def fetch_sequences_safely(id_list, delay=0.34):
+def download_sequences(id_list, output_file):
     """
-    جلب التسلسلات مع تحديد المعدل.
+    تنزيل تسلسلات متعددة من NCBI.
 
     Args:
         id_list: قائمة معرفات GenBank
-        delay: ثوان بين الطلبات (0.34 = ~3 طلب/ثانية)
+        output_file: ملف FASTA الإخراج
     """
-    sequences = []
+    Entrez.email = "your.email@example.com"
 
-    for i, seq_id in enumerate(id_list):
-        print(f"جلب {i+1}/{len(id_list)}: {seq_id}")
+    # جلب جميع التسلسلات دفعة واحدة (فعال)
+    handle = Entrez.efetch(db="nucleotide",
+                           id=id_list,
+                           rettype="fasta",
+                           retmode="text")
 
-        try:
-            handle = Entrez.efetch(
-                db="nucleotide",
-                id=seq_id,
-                rettype="fasta",
-                retmode="text"
-            )
-            sequences.append(handle.read())
-            handle.close()
+    # التحليل والحفظ
+    records = SeqIO.parse(handle, "fasta")
+    count = SeqIO.write(records, output_file, "fasta")
+    handle.close()
 
-            # تحديد المعدل
-            time.sleep(delay)
-
-        except Exception as e:
-            print(f"خطأ في جلب {seq_id}: {e}")
-            continue
-
-    return sequences
+    print(f"Downloaded {count} sequences")
 
 # مثال
 ids = ["NM_007294", "NM_000546", "NM_001904"]
-seqs = fetch_sequences_safely(ids)
+download_sequences(ids, "genes.fasta")
 ```
 
 ---
 
-#### 💾 تخزين البيانات المنزلة مؤقتاً
+### 5. أفضل الممارسات لكود المعلوماتية الحيوية
 
-**لا تعيد التنزيل دون داعٍ:**
+#### ✅ تنظيم الكود
+
+**هيكل نصي برمجي جيد:**
 
 ```python
-import os
-import pickle
-from datetime import datetime, timedelta
+"""
+analyze_sequences.py - تحليل محتوى GC لتسلسلات FASTA
 
-def cached_database_query(query_func, cache_file, max_age_days=7):
+الاستخدام:
+    python analyze_sequences.py input.fasta output.csv
+"""
+
+from Bio import SeqIO
+import sys
+
+def calculate_gc_content(sequence):
+    """حساب نسبة محتوى GC."""
+    gc_count = sequence.count('G') + sequence.count('C')
+    return (gc_count / len(sequence)) * 100
+
+def analyze_fasta(input_file, output_file):
     """
-    تخزين نتائج استعلام قاعدة البيانات مؤقتاً.
+    تحليل محتوى GC لجميع التسلسلات في FASTA.
 
     Args:
-        query_func: دالة تنفذ الاستعلام
-        cache_file: مسار ملف التخزين المؤقت
-        max_age_days: الحد الأقصى لعمر التخزين المؤقت بالأيام
+        input_file: مسار ملف FASTA الإدخال
+        output_file: مسار ملف CSV الإخراج
     """
-    # تحقق من وجود التخزين المؤقت وحداثته
-    if os.path.exists(cache_file):
-        cache_age = datetime.now() - datetime.fromtimestamp(
-            os.path.getmtime(cache_file)
-        )
+    results = []
 
-        if cache_age < timedelta(days=max_age_days):
-            print(f"استخدام البيانات المخزنة مؤقتاً (العمر: {cache_age.days} أيام)")
-            with open(cache_file, 'rb') as f:
-                return pickle.load(f)
+    for record in SeqIO.parse(input_file, "fasta"):
+        gc = calculate_gc_content(str(record.seq))
+        results.append(f"{record.id},{len(record.seq)},{gc:.2f}")
 
-    # فشل التخزين المؤقت أو انتهت صلاحيته - استعلام قاعدة البيانات
-    print("الاستعلام عن قاعدة البيانات...")
-    result = query_func()
+    # كتابة النتائج
+    with open(output_file, 'w') as f:
+        f.write("seq_id,length,gc_content\n")
+        for line in results:
+            f.write(line + "\n")
 
-    # حفظ في التخزين المؤقت
-    with open(cache_file, 'wb') as f:
-        pickle.dump(result, f)
+    print(f"Analyzed {len(results)} sequences")
 
-    return result
+def main():
+    """نقطة الدخول الرئيسية."""
+    if len(sys.argv) != 3:
+        print("Usage: python analyze_sequences.py input.fasta output.csv")
+        sys.exit(1)
 
-# مثال الاستخدام
-def query_brca1():
-    """دالة استعلام مثالية."""
-    from Bio import Entrez
-    Entrez.email = "your.email@example.com"
+    input_file = sys.argv[1]
+    output_file = sys.argv[2]
 
-    handle = Entrez.esearch(db="gene", term="BRCA1[Gene] AND human[Organism]")
-    result = Entrez.read(handle)
-    handle.close()
-    return result
+    analyze_fasta(input_file, output_file)
 
-# استخدم النسخة المخزنة مؤقتاً
-data = cached_database_query(query_brca1, "brca1_cache.pkl", max_age_days=7)
+if __name__ == "__main__":
+    main()
 ```
 
 ---
 
-#### 🛡️ معالجة الأخطاء
+#### 📝 التوثيق
 
-**الشبكات تفشل. خطط لذلك:**
+!!! tip "مستويات التوثيق"
+    1. **وثائق الوحدة** - ماذا يفعل النص البرمجي
+    2. **وثائق الدالة** - ماذا تفعل كل دالة
+    3. **تعليقات سطرية** - لماذا (وليس ماذا) للمنطق المعقد
+    4. **README** - كيفية استخدام النص البرمجي
+
+**مثال التوثيق:**
 
 ```python
-from Bio import Entrez
-import time
+def align_sequences(seq1, seq2, match=1, mismatch=-1, gap=-2):
+    """
+    إجراء محاذاة زوجية للتسلسل باستخدام Needleman-Wunsch.
 
-def robust_fetch(db, id, rettype, retmode, max_retries=3):
-    """الجلب مع إعادة المحاولة التلقائية."""
-    Entrez.email = "your.email@example.com"
+    Args:
+        seq1 (str): التسلسل الأول
+        seq2 (str): التسلسل الثاني
+        match (int): درجة البقايا المتطابقة (افتراضي: 1)
+        mismatch (int): عقوبة عدم التطابق (افتراضي: -1)
+        gap (int): عقوبة الفجوات (افتراضي: -2)
 
-    for attempt in range(max_retries):
-        try:
-            handle = Entrez.efetch(
-                db=db,
-                id=id,
-                rettype=rettype,
-                retmode=retmode
-            )
-            result = handle.read()
-            handle.close()
-            return result
+    Returns:
+        tuple: (aligned_seq1, aligned_seq2, alignment_score)
 
-        except Exception as e:
-            print(f"المحاولة {attempt + 1} فشلت: {e}")
+    Example:
+        >>> align_sequences("ATGC", "ATGC")
+        ('ATGC', 'ATGC', 4)
 
-            if attempt < max_retries - 1:
-                wait_time = 2 ** attempt  # تراجع أسي
-                print(f"إعادة المحاولة في {wait_time} ثوان...")
-                time.sleep(wait_time)
-            else:
-                print("تم الوصول إلى الحد الأقصى لإعادة المحاولة")
-                raise
-
-# مثال
-try:
-    data = robust_fetch("nucleotide", "NM_007294", "fasta", "text")
-    print("نجح!")
-except Exception as e:
-    print(f"فشل استرجاع البيانات: {e}")
+    Raises:
+        ValueError: إذا كانت التسلسلات فارغة
+    """
+    # التنفيذ هنا...
 ```
+
+---
+
+#### 🔬 اختبار الكود الخاص بك
+
+**اختبار بسيط:**
+
+```python
+def test_gc_content():
+    """اختبار حساب محتوى GC."""
+    # حالة الاختبار 1: كل GC
+    assert calculate_gc_content("GCGCGC") == 100.0
+
+    # حالة الاختبار 2: لا GC
+    assert calculate_gc_content("ATATAT") == 0.0
+
+    # حالة الاختبار 3: مختلط
+    result = calculate_gc_content("ATGC")
+    assert 49.0 < result < 51.0  # ~50%
+
+    print("All tests passed!")
+
+test_gc_content()
+```
+
+---
+
+#### 🚀 اعتبارات الأداء
+
+??? note "كود فعال مقابل غير فعال"
+    **غير فعال:**
+    ```python
+    # قراءة الملف بالكامل في الذاكرة
+    sequences = []
+    for record in SeqIO.parse("huge_file.fasta", "fasta"):
+        sequences.append(record)  # ❌ يحمل كل شيء
+
+    # معالجة التسلسلات
+    for seq in sequences:
+        print(len(seq))
+    ```
+
+    **فعال:**
+    ```python
+    # المعالجة واحداً تلو الآخر (دفق)
+    for record in SeqIO.parse("huge_file.fasta", "fasta"):
+        print(len(record))  # ✓ معالجة فورية، لا تخزين
+    ```
 
 ---
 
 ## 📝 التمارين
 
-### التمرين 1: البحث في قواعد بيانات متعددة
+### التمرين 1: إحصائيات التسلسل
+
+اكتب دالة تحسب إحصائيات شاملة لتسلسل DNA:
+
+```python
+def sequence_stats(dna_seq):
+    """
+    حساب الإحصائيات لتسلسل DNA.
+
+    يجب أن تُرجع قاموساً يحتوي على:
+    - length
+    - gc_content (%)
+    - at_content (%)
+    - nucleotide_counts (dict)
+    """
+    # كودك هنا
+    pass
+
+# اختبار
+seq = "ATGCGATCGTAGCTAGCT"
+stats = sequence_stats(seq)
+print(stats)
+# الإخراج المتوقع:
+# {
+#   'length': 18,
+#   'gc_content': 55.56,
+#   'at_content': 44.44,
+#   'nucleotide_counts': {'A': 4, 'T': 4, 'G': 6, 'C': 4}
+# }
+```
+
+### التمرين 2: محلل FASTA
+
+اكتب نصاً برمجياً:
+1. يقرأ ملف FASTA
+2. يحسب محتوى GC لكل تسلسل
+3. يكتب النتائج إلى ملف CSV بأعمدة: `id,length,gc_content`
+
+### التمرين 3: تنزيل NCBI
 
 اكتب دالة:
-1. تأخذ رمز الجين كمدخل
-2. تبحث في قاعدة بيانات NCBI Gene
-3. تسترجع تسلسلات البروتين المرتبطة
-4. تعثر على مقالات PubMed ذات الصلة
-5. ترجع قاموس ملخص
-
-### التمرين 2: خط أنابيب التنزيل الدفعي
-
-أنشئ نصاً برمجياً:
-1. يقرأ قائمة انضمام البروتين من ملف
-2. ينزل كل تسلسل من UniProt
-3. يحفظ في ملف FASTA واحد
-4. ينفذ تحديد معدل مناسب
-5. يتعامل مع الأخطاء بأمان
-
-### التمرين 3: التحقق من الإحالات المرجعية المتبادلة
-
-ابنِ أداة:
-1. تأخذ رقم انضمام UniProt
-2. تتحقق من الإحالات المرجعية المتبادلة إلى GenBank و PDB
-3. تقرر عن قواعد البيانات التي لديها بيانات
-4. تصدر جدول ملخص
+1. تبحث في NCBI عن اسم جين
+2. تنزل أفضل 5 نتائج
+3. تحفظها في ملف FASTA
 
 ---
 
@@ -834,16 +731,16 @@ except Exception as e:
 
 ### مطلوب
 
-1. **موارد قواعد بيانات NCBI**
-   *التركيز*: نظرة عامة على نظام NCBI
+1. **Python for Biologists** - Martin Jones (الفصول 1-5)
+   *التركيز*: أساسيات Python مع أمثلة بيولوجية
 
-2. **UniProt: مركز عالمي لمعرفة البروتين** (2019)
-   *التركيز*: تنظيم UniProt وجودة البيانات
+2. **Biopython Tutorial and Cookbook**
+   *التركيز*: SeqIO، كائنات Seq، Entrez
 
 ### تكميلي
 
-3. **أرشيف بيانات PDB** - فهم البيانات الهيكلية
-4. **أفضل الممارسات لدمج قواعد البيانات** - مصدر البيانات
+3. **Python Documentation** - الأنواع والوظائف المدمجة
+4. **NCBI E-utilities Documentation** - مرجع Entrez API
 
 ---
 
@@ -851,34 +748,40 @@ except Exception as e:
 
 بعد إكمال هذا الفصل، يجب أن تكون قادراً على:
 
-- [ ] تحديد قاعدة البيانات المناسبة لنوع بيانات معين
-- [ ] إنشاء استعلامات Entrez متقدمة
-- [ ] كتابة نصوص Python لاسترجاع البيانات من NCBI و UniProt و PDB
-- [ ] تنفيذ تحديد المعدل المناسب ومعالجة الأخطاء
-- [ ] تخزين البيانات المنزلة مؤقتاً لتجنب الاستعلامات الزائدة
-- [ ] بناء خطوط أنابيب تدمج قواعد بيانات متعددة
-- [ ] التحقق من جودة البيانات والإحالات المرجعية المتبادلة
-- [ ] فهم دورات تحديث قواعد البيانات والإصدارات
+- [ ] كتابة نصوص Python باستخدام المتغيرات والحلقات والدوال
+- [ ] استخدام كائن Seq من Biopython للتعامل مع التسلسلات
+- [ ] تحليل ملفات FASTA و FASTQ و GenBank
+- [ ] الوصول إلى قواعد بيانات NCBI برمجياً باستخدام Entrez
+- [ ] حساب إحصائيات التسلسل الأساسية (محتوى GC، الطول، التركيب)
+- [ ] تصفية التسلسلات بناءً على معايير (الطول، الجودة، المحتوى)
+- [ ] كتابة دوال المعلوماتية الحيوية الموثقة جيداً وقابلة لإعادة الاستخدام
+- [ ] اختبار الكود الخاص بك بتأكيدات بسيطة
+- [ ] اتباع أفضل الممارسات لتنظيم الكود
 
-!!! tip "مشروع تدريبي"
-    ابنِ أداة استعلام قاعدة بيانات شخصية تجمع عمليات البحث الأكثر استخداماً في دوال قابلة لإعادة الاستخدام.
+!!! tip "الممارسة تصنع الإتقان"
+    الطريقة الوحيدة لتعلم البرمجة هي بكتابة الكود. أكمل جميع التمارين وجرب بياناتك البيولوجية الخاصة.
 
 ---
 
 ## 🔗 الارتباط بالفصول المستقبلية
 
-!!! info "لماذا قواعد البيانات مهمة"
-    **الفصل الرابع** (محاذاة التسلسلات) يتطلب:
-    - التسلسلات المسترجعة للمقارنة
-    - تسلسلات متعددة متماثلة من قواعد البيانات
-    - تسلسلات مرجعية للتحقق
+!!! info "لماذا البرمجة مهمة"
+    **الفصل الرابع** (قواعد البيانات) يتطلب:
+    - مهارات Entrez للاستعلام عن NCBI
+    - تحليل الملفات لملفات قواعد البيانات المحلية
+    - هياكل البيانات لتخزين النتائج
 
-    **الفصل الخامس** (الإحصاء) يتطلب:
-    - بيانات التعبير من GEO
-    - بيانات تعريف العينة
-    - مجموعات بيانات كبيرة للتحليل
+    **الفصل الخامس** (محاذاة التسلسلات) يتطلب:
+    - معالجة التسلسلات
+    - إدخال/إخراج الملفات لقراءة/كتابة المحاذاة
+    - الدوال لتنفيذ الخوارزميات
 
-**الفصل التالي**: [الفصل الرابع: محاذاة التسلسلات](module-4.md) - الآن بعد أن أصبحت قادراً على استرجاع البيانات البيولوجية، ستتعلم مقارنة التسلسلات باستخدام الخوارزميات الحسابية.
+    **الفصل السادس** (الإحصاء) يتطلب:
+    - هياكل البيانات (القوائم، القواميس)
+    - تحليل الملفات لمصفوفات العد
+    - Python للحوسبة الإحصائية
+
+**الفصل التالي**: [الفصل الرابع: قواعد البيانات البيولوجية](module-4.md) - الآن بعد أن أصبحت قادراً على البرمجة، ستتعلم الوصول إلى البيانات ودمجها من المستودعات العامة.
 
 ---
 

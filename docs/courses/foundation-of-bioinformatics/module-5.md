@@ -2,35 +2,32 @@
 draft: true
 ---
 
-# الفصل 5: الإحصاء لتحليل البيانات البيولوجية
-**فهم عدم اليقين، التباين، والدليل في علم الجينوم**
+# الفصل الرابع: خوارزميات محاذاة التسلسلات
+**إيجاد التشابه في التسلسلات البيولوجية**
 
-> **المفهوم الأساسي**: البيولوجيا متغيرة بطبيعتها. يساعدنا الإحصاء على فصل الإشارات البيولوجية المعنوية من الضوضاء العشوائية، مما يمكننا من استخلاص استنتاجات موثوقة من البيانات المشوشة.
+> **المفهوم الأساسي**: محاذاة التسلسلات هي أساس علم الجينوم المقارن، مما يسمح لنا بتحديد العلاقات التطورية، والتنبؤ بوظائف البروتينات، وفهم الآليات البيولوجية من خلال تشابه التسلسلات.
 
 ## أهداف التعلم
 
 بنهاية هذا الفصل، ستكون قادراً على:
 
-1. **وصف التباين البيولوجي** والتمييز بينه وبين الضوضاء التقنية
-2. **حساب الإحصاءات الوصفية** (المتوسط، الوسيط، التباين، الانحراف المعياري)
-3. **تحديد التوزيعات الاحتمالية** الشائعة في البيانات البيولوجية
-4. **إجراء اختبارات الفرضيات** (اختبارات t، ANOVA، الاختبارات اللامعلمية)
-5. **التحكم في الاختبارات المتعددة** باستخدام طرق تصحيح FDR
-6. **حساب القوة الإحصائية** وتحديد أحجام العينات
-7. **إنشاء تصورات فعالة** للبيانات البيولوجية
-8. **تحليل بيانات RNA-seq** للتعبير التفاضلي
-9. **تفسير قيم p بشكل صحيح** وتجنب التفسيرات الخاطئة الشائعة
-10. **التعرف على المزالق الإحصائية** (p-hacking، الازدواجية الزائفة)
+1. **فهم خوارزميات المحاذاة** وأسسها النظرية
+2. **تطبيق البرمجة الديناميكية** للمحاذاة الثنائية المثلى
+3. **استخدام BLAST والطرق الاستدلالية** للبحث في قواعد البيانات
+4. **إجراء محاذاة التسلسلات المتعددة** للتحليل التطوري
+5. **بناء أشجار النشوء والتطور** من التسلسلات المحاذاة
+6. **تحليل تعقيد الخوارزميات** واختيار الطرق المناسبة
+7. **تفسير إحصائيات المحاذاة** ودرجات الأهمية
 
 ---
 
 ## المتطلبات الأساسية
 
 !!! info "المعرفة المطلوبة"
-    - **الفصل 1**: فهم أساسي للتسلسلات البيولوجية
-    - **الفصل 2**: برمجة Python (أو R)
-    - **الفصل 3**: الوصول إلى قواعد البيانات لاسترجاع مجموعات البيانات
-    - **الرياضيات**: مفاهيم أساسية في الجبر والاحتمالات
+    - **الفصل 1**: التسلسلات البيولوجية وخصائصها
+    - **الفصل 2**: أساسيات البرمجة بلغة Python و Biopython
+    - **الفصل 3**: الوصول إلى قواعد البيانات البيولوجية
+    - **الرياضيات**: فهم أساسي للمصفوفات والتكرار
 
 ---
 
@@ -38,1185 +35,1128 @@ draft: true
 
 ```mermaid
 graph TB
-    A["Statistical Analysis<br/>التحليل الإحصائي"] --> B["Descriptive Statistics<br/>الإحصاءات الوصفية"]
-    A --> C["Hypothesis Testing<br/>اختبار الفرضيات"]
-    A --> D["Multiple Testing<br/>الاختبارات المتعددة"]
-    A --> E["Visualization<br/>التصور"]
+    A["Sequence Alignment<br/>محاذاة التسلسلات"] --> B["Pairwise Alignment<br/>المحاذاة الثنائية"]
+    A --> C["Multiple Alignment<br/>المحاذاة المتعددة"]
+    A --> D["Database Search<br/>البحث في قواعد البيانات"]
 
-    B --> F["Central Tendency<br/>الاتجاه المركزي"]
-    B --> G["Variability Measures<br/>مقاييس التباين"]
-    B --> H["Distributions<br/>التوزيعات"]
+    B --> E["Global: Needleman-Wunsch<br/>شاملة: Needleman-Wunsch"]
+    B --> F["Local: Smith-Waterman<br/>محلية: Smith-Waterman"]
 
-    C --> I["t-tests<br/>اختبارات t"]
-    C --> J["ANOVA"]
-    C --> K["Non-parametric Tests<br/>الاختبارات اللامعلمية"]
+    C --> G["Progressive: ClustalW<br/>تدريجية: ClustalW"]
+    C --> H["Iterative: MUSCLE<br/>تكرارية: MUSCLE"]
 
-    D --> L["Bonferroni"]
-    D --> M["FDR: Benjamini-Hochberg"]
-    D --> N["q-values<br/>قيم q"]
+    D --> I["Heuristic: BLAST<br/>استدلالية: BLAST"]
+    D --> J["Statistical Significance<br/>الأهمية الإحصائية"]
 
-    E --> O["Histograms & Density<br/>الرسوم البيانية والكثافة"]
-    E --> P["Box & Violin Plots<br/>رسوم الصندوق والكمان"]
-    E --> Q["Volcano & MA Plots<br/>رسوم البركان وMA"]
+    E --> K["Dynamic Programming<br/>البرمجة الديناميكية"]
+    F --> K
+    G --> K
+
+    I --> L["Seed-and-Extend Strategy<br/>استراتيجية البذور والتمديد"]
 
     style A fill:#e1f5ff
-    style D fill:#ffe1e1
-    style E fill:#e1ffe1
+    style K fill:#fff4e1
+    style L fill:#ffe1e1
 ```
 
 ---
 
-## 1. لماذا يهم الإحصاء في المعلوماتية الحيوية
+## 1. المحاذاة الثنائية للتسلسلات
 
-### 1.1 تحدي التباين البيولوجي
+### 1.1 مشكلة المحاذاة
 
-**البيولوجيا مشوشة**. لا توجد خليتان أو كائنان أو تجربتان متطابقتان:
+**ما هي محاذاة التسلسلات؟**
 
-**التباين البيولوجي** (الاختلافات الحقيقية):
-- التنوع الجيني بين الأفراد
-- مراحل النمو ومراحل دورة الخلية
-- عدم التجانس في البيئة الدقيقة
-- التعبير الجيني العشوائي (الانفجار النسخي)
+المحاذاة تنظم التسلسلات لتحديد مناطق التشابه التي قد تشير إلى:
+- **العلاقات التطورية** (التماثل)
+- **العلاقات الوظيفية** (البروتينات المتشابهة غالباً لها وظائف متشابهة)
+- **العلاقات البنيوية** (التسلسلات المحفوظة غالباً لها بنى محفوظة)
 
-**التباين التقني** (ضوضاء القياس):
-- تباين تحضير العينة
-- تأثيرات الدفعة (أيام مختلفة، كواشف، مشغلون)
-- معايرة وحساسية الأجهزة
-- اختيارات التحليل الحسابي
-
-!!! warning "تحدي علم الجينوم"
-    عند اختبار 20,000 جين للتعبير التفاضلي:
-
-    - عند α = 0.05، **توقع 1,000 إيجابية كاذبة** حتى لو لم يكن هناك شيء حقيقي
-    - بدون تصحيح: معظم "الاكتشافات" هي ضوضاء
-    - **الحل**: تصحيح الاختبارات المتعددة (التحكم في FDR)
-
-### 1.2 السيناريوهات الواقعية
-
-=== "تحليل RNA-seq"
-    **المشكلة**: اختبار 20,000 جين للتعبير التفاضلي
-
-    **بدون تصحيح**:
-    - استخدام عتبة p < 0.05
-    - العثور على 1,200 جين "معنوي"
-    - ~1,000 هي إيجابيات كاذبة (5% × 20,000)
-
-    **مع تصحيح FDR**:
-    - تطبيق Benjamini-Hochberg عند FDR < 0.05
-    - العثور على 150 جين معنوي
-    - ~7-8 هي إيجابيات كاذبة (5% من 150)
-
-    **الإحصاء ينقذك من مطاردة أكثر من 950 دليل كاذب**
-
-=== "قياس البروتين الكمي"
-    **البيانات**: وفرة البروتين في 5 نسخ بيولوجية
-
+=== "مثال محاذاة DNA"
     ```
-    التحكم:    [45, 123, 89, 245, 127]  المتوسط = 127.4
-    العلاج:  [234, 198, 289, 256, 223] المتوسط = 240.0
+    Sequence 1: ACGTACGT
+    Sequence 2: ACGTTCGT
+                ||||*|||
+                تطابق مع عدم تطابق واحد
     ```
 
-    **الأسئلة**:
-    - هل الفرق حقيقي أم تباين عشوائي؟
-    - ما مدى ثقتنا؟
-    - ما هو حجم التأثير؟
+=== "مثال محاذاة البروتينات"
+    ```
+    Sequence 1: MALWMRLLPL
+    Sequence 2: MALW-RLLPL
+                ****-*****
+                تطابق مع فجوة واحدة
+    ```
 
-    **الإحصاء يحدد الثقة، وليس فقط المتوسطات**
+### 1.2 أنظمة التسجيل
 
-=== "دراسات GWAS"
-    **المشكلة**: اختبار مليون متغير جيني لارتباط المرض
+**مكونات درجة المحاذاة:**
 
-    **العتبة القياسية**: p < 0.05 تعطي 50,000 إيجابية كاذبة
+1. **درجات التطابق/عدم التطابق**
+   - بسيطة: +1 للتطابق، -1 لعدم التطابق
+   - مصفوفات الاستبدال: BLOSUM، PAM
 
-    **عتبة GWAS**: p < 5×10⁻⁸ تتحكم في الخطأ على مستوى الجينوم
+2. **عقوبات الفجوات**
+   - خطية: العقوبة = عقوبة_الفجوة × طول_الفجوة
+   - تآلفية: العقوبة = فتح_الفجوة + تمديد_الفجوة × طول_الفجوة
 
-    **الإحصاء يمنع نشر الهراء**
+!!! tip "عقوبات الفجوات التآلفية"
+    العقوبات التآلفية واقعية بيولوجياً لأن:
+    - فتح فجوة (حدث إدخال/حذف) نادر
+    - تمديد فجوة موجودة أكثر احتمالاً
+    - المعادلة: `العقوبة = -d - (k-1)×e` حيث d=الفتح، e=التمديد، k=طول الفجوة
+
+### 1.3 مصفوفات الاستبدال
+
+**BLOSUM (مصفوفة استبدال الكتل)**
+
+```python
+from Bio.SubsMat import MatrixInfo
+
+# تحميل مصفوفة BLOSUM62
+blosum62 = MatrixInfo.blosum62
+
+# الحصول على درجة محاذاة الليوسين (L) مع الإيزوليوسين (I)
+score = blosum62[('L', 'I')]
+print(f"BLOSUM62 score for L-I: {score}")  # الناتج: 2
+
+# الحصول على درجة محاذاة الليوسين (L) مع حمض الأسبارتيك (D)
+score = blosum62.get(('L', 'D'), blosum62.get(('D', 'L')))
+print(f"BLOSUM62 score for L-D: {score}")  # الناتج: -4
+```
+
+**فهم أرقام BLOSUM:**
+
+- **BLOSUM62**: بناءً على محاذاة التسلسلات ذات تطابق ≥62%
+- **BLOSUM80**: للتسلسلات الأكثر تشابهاً (التطور الحديث)
+- **BLOSUM45**: للتسلسلات الأكثر بعداً (التطور القديم)
+
+??? example "إنشاء دالة تسجيل بسيطة"
+    ```python
+    def score_match(char1, char2, match=1, mismatch=-1):
+        """دالة تسجيل بسيطة للنيوكليوتيدات."""
+        if char1 == char2:
+            return match
+        else:
+            return mismatch
+
+    def affine_gap_penalty(gap_length, gap_open=-5, gap_extend=-1):
+        """حساب عقوبة الفجوة التآلفية."""
+        if gap_length == 0:
+            return 0
+        return gap_open + (gap_length - 1) * gap_extend
+
+    # مثال الاستخدام
+    print(score_match('A', 'A'))  # 1
+    print(score_match('A', 'T'))  # -1
+    print(affine_gap_penalty(3))  # -5 + 2*(-1) = -7
+    ```
 
 ---
 
-## 2. الإحصاءات الوصفية
+## 2. خوارزميات البرمجة الديناميكية
 
-### 2.1 مقاييس الاتجاه المركزي
+### 2.1 Needleman-Wunsch: المحاذاة الشاملة
 
-**الاتجاه المركزي**: أين "وسط" البيانات؟
+خوارزمية **Needleman-Wunsch** تجد المحاذاة الشاملة المثلى بين تسلسلين.
 
-| المقياس | الصيغة | الأفضل لـ | الحساسية |
-|---------|---------|----------|-------------|
-| **المتوسط** | Σx / n | التوزيعات المتماثلة | حساس للقيم الشاذة |
-| **الوسيط** | القيمة الوسطى | التوزيعات المنحرفة | مقاوم للقيم الشاذة |
-| **المنوال** | القيمة الأكثر تكراراً | البيانات الفئوية | - |
+**خطوات الخوارزمية:**
 
-=== "الحساب في Python"
+1. **تهيئة** مصفوفة التسجيل
+2. **ملء** المصفوفة باستخدام التكرار
+3. **التتبع العكسي** لإيجاد المحاذاة المثلى
+
+=== "الكود الكاذب للخوارزمية"
+    ```
+    1. تهيئة الصف والعمود الأول بعقوبات الفجوات
+    2. لكل خلية (i,j):
+       F(i,j) = max(
+           F(i-1,j-1) + s(xi, yj),    # تطابق/عدم تطابق
+           F(i-1,j) + gap_penalty,     # فجوة في التسلسل y
+           F(i,j-1) + gap_penalty      # فجوة في التسلسل x
+       )
+    3. التتبع العكسي من F(m,n) إلى F(0,0)
+    ```
+
+=== "تنفيذ Python"
     ```python
     import numpy as np
-    import pandas as pd
-    from scipy import stats
 
-    # قيم التعبير الجيني
-    expression = [45, 123, 89, 245, 127, 98, 156, 134, 112, 5000]  # القيمة الأخيرة قيمة شاذة
+    def needleman_wunsch(seq1, seq2, match=1, mismatch=-1, gap=-2):
+        """
+        خوارزمية Needleman-Wunsch للمحاذاة الشاملة.
 
-    # الاتجاه المركزي
-    mean_val = np.mean(expression)
-    median_val = np.median(expression)
-    mode_val = stats.mode(expression, keepdims=True).mode[0]
+        الإرجاع:
+            score: درجة المحاذاة
+            alignment1: التسلسل الأول المحاذى
+            alignment2: التسلسل الثاني المحاذى
+        """
+        m, n = len(seq1), len(seq2)
 
-    print(f"Mean: {mean_val:.1f}")      # 612.9 (متأثر بالقيمة الشاذة)
-    print(f"Median: {median_val:.1f}")  # 120.0 (مقاوم)
-    print(f"Mode: {mode_val}")
+        # تهيئة مصفوفة التسجيل
+        score_matrix = np.zeros((m + 1, n + 1))
 
-    # بدون القيمة الشاذة
-    expression_clean = expression[:-1]
-    print(f"Mean (no outlier): {np.mean(expression_clean):.1f}")  # 125.4
+        # تهيئة الصف والعمود الأول
+        for i in range(m + 1):
+            score_matrix[i][0] = gap * i
+        for j in range(n + 1):
+            score_matrix[0][j] = gap * j
+
+        # ملء مصفوفة التسجيل
+        for i in range(1, m + 1):
+            for j in range(1, n + 1):
+                match_score = match if seq1[i-1] == seq2[j-1] else mismatch
+
+                diagonal = score_matrix[i-1][j-1] + match_score
+                up = score_matrix[i-1][j] + gap
+                left = score_matrix[i][j-1] + gap
+
+                score_matrix[i][j] = max(diagonal, up, left)
+
+        # التتبع العكسي
+        align1, align2 = '', ''
+        i, j = m, n
+
+        while i > 0 or j > 0:
+            if i > 0 and j > 0:
+                match_score = match if seq1[i-1] == seq2[j-1] else mismatch
+                if score_matrix[i][j] == score_matrix[i-1][j-1] + match_score:
+                    align1 = seq1[i-1] + align1
+                    align2 = seq2[j-1] + align2
+                    i -= 1
+                    j -= 1
+                    continue
+
+            if i > 0 and score_matrix[i][j] == score_matrix[i-1][j] + gap:
+                align1 = seq1[i-1] + align1
+                align2 = '-' + align2
+                i -= 1
+            elif j > 0:
+                align1 = '-' + align1
+                align2 = seq2[j-1] + align2
+                j -= 1
+
+        return score_matrix[m][n], align1, align2
+
+    # مثال الاستخدام
+    seq1 = "ACGTACGT"
+    seq2 = "ACGTTCGT"
+    score, align1, align2 = needleman_wunsch(seq1, seq2)
+
+    print(f"Alignment Score: {score}")
+    print(f"Seq1: {align1}")
+    print(f"Seq2: {align2}")
     ```
 
-=== "الحساب في R"
-    ```r
-    # قيم التعبير الجيني
-    expression <- c(45, 123, 89, 245, 127, 98, 156, 134, 112, 5000)
+=== "استخدام Biopython"
+    ```python
+    from Bio import pairwise2
+    from Bio.pairwise2 import format_alignment
 
-    # الاتجاه المركزي
-    mean_val <- mean(expression)
-    median_val <- median(expression)
-    mode_val <- as.numeric(names(sort(table(expression), decreasing=TRUE)[1]))
+    seq1 = "ACGTACGT"
+    seq2 = "ACGTTCGT"
 
-    print(paste("Mean:", round(mean_val, 1)))      # 612.9
-    print(paste("Median:", round(median_val, 1)))  # 120.0
+    # محاذاة شاملة بالتسجيل الافتراضي
+    alignments = pairwise2.align.globalxx(seq1, seq2)
 
-    # بدون القيمة الشاذة
-    expression_clean <- expression[-length(expression)]
-    print(paste("Mean (no outlier):", round(mean(expression_clean), 1)))
+    # عرض أفضل محاذاة
+    print(format_alignment(*alignments[0]))
+
+    # محاذاة شاملة بتسجيل مخصص
+    # المعاملات: تطابق، عدم تطابق، فتح_فجوة، تمديد_فجوة
+    alignments = pairwise2.align.globalms(
+        seq1, seq2,
+        match=2,      # درجة التطابق
+        mismatch=-1,  # عقوبة عدم التطابق
+        open=-5,      # عقوبة فتح الفجوة
+        extend=-1     # عقوبة تمديد الفجوة
+    )
+
+    for alignment in alignments[:3]:
+        print(format_alignment(*alignment))
     ```
 
-**متى تستخدم أيهما**:
-- **المتوسط**: بيانات موزعة بشكل طبيعي، بدون قيم شاذة متطرفة
-- **الوسيط**: بيانات منحرفة، وجود قيم شاذة (أكثر مقاومة)
-- **المنوال**: بيانات فئوية أو منفصلة
+**تحليل التعقيد:**
 
-### 2.2 مقاييس التباين
+- **تعقيد الوقت**: O(mn) حيث m, n أطوال التسلسلات
+- **تعقيد المساحة**: O(mn) لمصفوفة التسجيل
+- **مثالية**: تضمن إيجاد أفضل محاذاة شاملة
 
-**التباين**: ما مدى انتشار البيانات؟
+!!! warning "متطلبات الذاكرة"
+    للتسلسلات الطويلة جداً (>10,000 bp)، قد تصبح الذاكرة محدودة:
+    - تسلسلان بطول 10,000 bp يتطلبان ~100 ميجابايت
+    - تسلسلان بطول 100,000 bp يتطلبان ~10 جيجابايت
+    - ضع في اعتبارك متغيرات المساحة الخطية (خوارزمية Hirschberg) للتسلسلات الكبيرة
 
-| المقياس | الصيغة | التفسير |
-|---------|---------|----------------|
-| **المدى** | max - min | الانتشار الكلي |
-| **التباين** | Σ(x - μ)² / n | متوسط الانحراف التربيعي |
-| **الانحراف المعياري (SD)** | √التباين | متوسط الانحراف (نفس وحدات البيانات) |
-| **معامل التباين (CV)** | SD / المتوسط × 100% | التباين النسبي (%) |
+### 2.2 Smith-Waterman: المحاذاة المحلية
 
-```python
-import numpy as np
+خوارزمية **Smith-Waterman** تجد المحاذاة المحلية المثلى (أفضل تسلسل فرعي متطابق).
 
-data = [45, 123, 89, 245, 127, 98, 156, 134, 112]
+**الاختلافات الرئيسية عن Needleman-Wunsch:**
 
-# مقاييس التباين
-range_val = np.max(data) - np.min(data)
-variance = np.var(data, ddof=1)  # ddof=1 لتباين العينة
-std_dev = np.std(data, ddof=1)
-cv = (std_dev / np.mean(data)) * 100
+1. **التهيئة**: الصف والعمود الأول أصفار
+2. **التسجيل**: الدرجات السالبة تُضبط على صفر
+3. **التتبع العكسي**: يبدأ من أعلى درجة، ينتهي عند الصفر
 
-print(f"Range: {range_val}")
-print(f"Variance: {variance:.2f}")
-print(f"Standard Deviation: {std_dev:.2f}")
-print(f"Coefficient of Variation: {cv:.1f}%")
-```
+=== "تعديلات الخوارزمية"
+    ```
+    التغييرات الرئيسية:
+    1. F(0,j) = 0 لكل j
+       F(i,0) = 0 لكل i
 
-**الخطأ المعياري للمتوسط (SEM)**: عدم اليقين في تقدير المتوسط
+    2. F(i,j) = max(
+           0,                              # جديد: السماح بالصفر
+           F(i-1,j-1) + s(xi, yj),
+           F(i-1,j) + gap_penalty,
+           F(i,j-1) + gap_penalty
+       )
 
-```python
-sem = std_dev / np.sqrt(len(data))
-print(f"SEM: {sem:.2f}")
+    3. التتبع العكسي من max(F) إلى أول صفر
+    ```
 
-# فترة الثقة 95% للمتوسط
-from scipy import stats
-ci_95 = stats.t.interval(0.95, len(data)-1, loc=np.mean(data), scale=sem)
-print(f"95% CI: ({ci_95[0]:.1f}, {ci_95[1]:.1f})")
-```
+=== "تنفيذ Python"
+    ```python
+    def smith_waterman(seq1, seq2, match=2, mismatch=-1, gap=-1):
+        """
+        خوارزمية Smith-Waterman للمحاذاة المحلية.
 
-!!! tip "SD مقابل SEM"
-    - **SD**: يصف التباين في البيانات
-    - **SEM**: يصف عدم اليقين في تقدير المتوسط
-    - **SEM دائماً أصغر من SD** (SEM = SD / √n)
-    - استخدم SD لوصف البيانات، SEM للاستدلال على متوسط المجتمع
+        الإرجاع:
+            score: أفضل درجة محاذاة محلية
+            alignment1: التسلسل الفرعي المحاذى 1
+            alignment2: التسلسل الفرعي المحاذى 2
+        """
+        m, n = len(seq1), len(seq2)
+        score_matrix = np.zeros((m + 1, n + 1))
 
-### 2.3 الأرباع والنسب المئوية
+        max_score = 0
+        max_pos = (0, 0)
 
-**الأرباع** تقسم البيانات إلى أربعة أجزاء متساوية:
+        # ملء مصفوفة التسجيل
+        for i in range(1, m + 1):
+            for j in range(1, n + 1):
+                match_score = match if seq1[i-1] == seq2[j-1] else mismatch
 
-- **Q1** (النسبة المئوية 25): 25% من البيانات تحت هذه القيمة
-- **Q2** (النسبة المئوية 50): الوسيط
-- **Q3** (النسبة المئوية 75): 75% من البيانات تحت هذه القيمة
-- **IQR** (المدى بين الأرباع): Q3 - Q1 (منتصف 50% من البيانات)
+                diagonal = score_matrix[i-1][j-1] + match_score
+                up = score_matrix[i-1][j] + gap
+                left = score_matrix[i][j-1] + gap
 
-```python
-import numpy as np
+                score_matrix[i][j] = max(0, diagonal, up, left)
 
-data = [45, 123, 89, 245, 127, 98, 156, 134, 112, 178, 145, 167]
+                # تتبع موقع أقصى درجة
+                if score_matrix[i][j] > max_score:
+                    max_score = score_matrix[i][j]
+                    max_pos = (i, j)
 
-# الأرباع
-q1 = np.percentile(data, 25)
-q2 = np.percentile(data, 50)  # الوسيط
-q3 = np.percentile(data, 75)
-iqr = q3 - q1
+        # التتبع العكسي من أقصى درجة
+        align1, align2 = '', ''
+        i, j = max_pos
 
-print(f"Q1: {q1:.1f}")
-print(f"Q2 (Median): {q2:.1f}")
-print(f"Q3: {q3:.1f}")
-print(f"IQR: {iqr:.1f}")
+        while i > 0 and j > 0 and score_matrix[i][j] > 0:
+            if i > 0 and j > 0:
+                match_score = match if seq1[i-1] == seq2[j-1] else mismatch
+                if score_matrix[i][j] == score_matrix[i-1][j-1] + match_score:
+                    align1 = seq1[i-1] + align1
+                    align2 = seq2[j-1] + align2
+                    i -= 1
+                    j -= 1
+                    continue
 
-# كشف القيم الشاذة باستخدام طريقة IQR
-lower_bound = q1 - 1.5 * iqr
-upper_bound = q3 + 1.5 * iqr
-outliers = [x for x in data if x < lower_bound or x > upper_bound]
-print(f"Outliers: {outliers}")
-```
+            if i > 0 and score_matrix[i][j] == score_matrix[i-1][j] + gap:
+                align1 = seq1[i-1] + align1
+                align2 = '-' + align2
+                i -= 1
+            elif j > 0 and score_matrix[i][j] == score_matrix[i][j-1] + gap:
+                align1 = '-' + align1
+                align2 = seq2[j-1] + align2
+                j -= 1
+            else:
+                break
+
+        return max_score, align1, align2
+
+    # مثال: إيجاد نطاق محفوظ
+    protein1 = "AACGTACGTWWWWDEFGHIKLMN"
+    protein2 = "XXACGTACGTYYYYY"
+
+    score, align1, align2 = smith_waterman(protein1, protein2)
+    print(f"Local Alignment Score: {score}")
+    print(f"Region 1: {align1}")
+    print(f"Region 2: {align2}")
+    ```
+
+=== "استخدام Biopython"
+    ```python
+    from Bio import pairwise2
+
+    protein1 = "AACGTACGTWWWWDEFGHIKLMN"
+    protein2 = "XXACGTACGTYYYYY"
+
+    # محاذاة محلية
+    alignments = pairwise2.align.localms(
+        protein1, protein2,
+        match=2,
+        mismatch=-1,
+        open=-5,
+        extend=-1
+    )
+
+    print("أفضل محاذاة محلية:")
+    print(format_alignment(*alignments[0]))
+    ```
+
+**متى نستخدم أي خوارزمية:**
+
+| حالة الاستخدام | الخوارزمية | السبب |
+|----------|-----------|--------|
+| مقارنة الجينات الكاملة | Needleman-Wunsch | نحتاج محاذاة كاملة الطول |
+| إيجاد النطاقات المحفوظة | Smith-Waterman | نهتم فقط بالمناطق المتشابهة |
+| محاذاة بروتينات متماثلة | Needleman-Wunsch | البروتينات بأطوال متشابهة |
+| البحث عن الأنماط | Smith-Waterman | النمط هو تسلسل فرعي قصير |
+| محاذاة تسلسلات الترميز | Needleman-Wunsch | مقارنة منطقة الترميز بأكملها |
 
 ---
 
-## 3. التوزيعات الاحتمالية
+## 3. الطرق الاستدلالية: BLAST
 
-### 3.1 التوزيع الطبيعي (الغاوسي)
+### 3.1 لماذا الاستدلال؟
 
-**الأكثر شيوعاً في البيولوجيا**: العديد من القياسات البيولوجية تقريباً طبيعية
+**المشكلة مع البرمجة الديناميكية:**
 
-**الخصائص**:
-- متماثل، على شكل جرس
-- يحدده المتوسط (μ) والانحراف المعياري (σ)
-- 68% ضمن ±1σ، 95% ضمن ±2σ، 99.7% ضمن ±3σ
+للبحث في قواعد البيانات، البرمجة الديناميكية بطيئة جداً:
+- GenBank يحتوي على >250 مليار نيوكليوتيد
+- محاذاة استعلام 1kb ضد GenBank: ~250 مليار × 1,000 = 10^14 عملية
+- حتى بمعدل مليار عملية/ثانية، يستغرق هذا >يوم واحد لكل استعلام
 
-```python
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy import stats
+**الحل: BLAST** (أداة البحث عن المحاذاة المحلية الأساسية)
 
-# توليد التوزيع الطبيعي
-mu, sigma = 100, 15
-x = np.linspace(mu - 4*sigma, mu + 4*sigma, 1000)
-y = stats.norm.pdf(x, mu, sigma)
+- **التضحيات**: الأمثلية المضمونة
+- **المكاسب**: تحسين سرعة 50-100×
+- **الاستراتيجية**: استدلال البذور والتمديد
 
-# الرسم
-plt.figure(figsize=(10, 6))
-plt.plot(x, y, linewidth=2)
-plt.axvline(mu, color='r', linestyle='--', label=f'Mean = {mu}')
-plt.axvline(mu - sigma, color='orange', linestyle='--', alpha=0.5)
-plt.axvline(mu + sigma, color='orange', linestyle='--', alpha=0.5)
-plt.fill_between(x, y, where=(x >= mu-sigma) & (x <= mu+sigma),
-                 alpha=0.3, label='68% of data')
-plt.xlabel('Value')
-plt.ylabel('Probability Density')
-plt.title('Normal Distribution')
-plt.legend()
-plt.grid(True, alpha=0.3)
-plt.savefig('normal_distribution.png', dpi=150, bbox_inches='tight')
-```
-
-**اختبار الطبيعية**:
-
-```python
-from scipy import stats
-
-# بيانات عينة
-data = np.random.normal(100, 15, 100)
-
-# اختبار Shapiro-Wilk (جيد للعينات الصغيرة)
-statistic, p_value = stats.shapiro(data)
-print(f"Shapiro-Wilk test: p = {p_value:.4f}")
-if p_value > 0.05:
-    print("Data appears normally distributed")
-else:
-    print("Data does not appear normally distributed")
-
-# رسم Q-Q (تقييم بصري)
-import scipy.stats as stats
-stats.probplot(data, dist="norm", plot=plt)
-plt.title("Q-Q Plot")
-plt.grid(True)
-plt.show()
-```
-
-### 3.2 التوزيعات لبيانات العد
-
-**RNA-seq وعلم الجينوم** تتضمن بيانات العد (منفصلة، وليست مستمرة)
-
-=== "توزيع بواسون"
-    **استخدم عندما**: عد الأحداث النادرة والمستقلة
-
-    **أمثلة**: عدد الطفرات لكل جينوم، أخطاء التسلسل
-
-    **الخاصية**: التباين = المتوسط
-
-    ```python
-    from scipy import stats
-
-    # توزيع بواسون (lambda = متوسط العد)
-    lambda_val = 5
-    x = np.arange(0, 20)
-    pmf = stats.poisson.pmf(x, lambda_val)
-
-    plt.figure(figsize=(10, 6))
-    plt.bar(x, pmf)
-    plt.xlabel('Count')
-    plt.ylabel('Probability')
-    plt.title(f'Poisson Distribution (λ = {lambda_val})')
-    plt.grid(True, alpha=0.3)
-    plt.show()
-    ```
-
-=== "ذو الحدين السالب"
-    **استخدم عندما**: بيانات العد مع التشتت الزائد (التباين > المتوسط)
-
-    **أمثلة**: عدد قراءات RNA-seq (التباين البيولوجي + التقني)
-
-    **الخاصية**: التباين > المتوسط (أكثر مرونة من بواسون)
-
-    ```python
-    from scipy import stats
-
-    # ذو الحدين السالب (n, p)
-    n, p = 10, 0.5
-    x = np.arange(0, 50)
-    pmf = stats.nbinom.pmf(x, n, p)
-
-    plt.figure(figsize=(10, 6))
-    plt.bar(x, pmf)
-    plt.xlabel('Count')
-    plt.ylabel('Probability')
-    plt.title(f'Negative Binomial Distribution (n={n}, p={p})')
-    plt.grid(True, alpha=0.3)
-    plt.show()
-    ```
-
-!!! warning "لا تستخدم اختبارات t على بيانات العد!"
-    بيانات RNA-seq هي عدّات، وليست قياسات مستمرة:
-
-    - ❌ **خطأ**: اختبار t (يفترض توزيع طبيعي)
-    - ✅ **صحيح**: DESeq2، edgeR (نموذج العدّات مع ذي الحدين السالب)
-
----
-
-## 4. اختبار الفرضيات
-
-### 4.1 منطق اختبار الفرضيات
+### 3.2 نظرة عامة على خوارزمية BLAST
 
 ```mermaid
 graph LR
-    A["Research Question<br/>سؤال البحث"] --> B["Formulate Hypotheses<br/>صياغة الفرضيات"]
-    B --> C["H0: Null Hypothesis<br/>H0: الفرضية الصفرية"]
-    B --> D["H1: Alternative Hypothesis<br/>H1: الفرضية البديلة"]
-    C --> E["Collect Data<br/>جمع البيانات"]
-    D --> E
-    E --> F["Calculate Test Statistic<br/>حساب إحصاءة الاختبار"]
-    F --> G["Compute p-value<br/>حساب قيمة p"]
-    G --> H{"p < α?<br/>p < α؟"}
-    H -->|"Yes<br/>نعم"| I["Reject H0<br/>رفض H0"]
-    H -->|"No<br/>لا"| J["Fail to Reject H0<br/>الفشل في رفض H0"]
+    A["Query Sequence<br/>تسلسل الاستعلام"] --> B["1. Generate Word List<br/>1. توليد قائمة الكلمات"]
+    B --> C["2. Scan Database for Seeds<br/>2. مسح قاعدة البيانات للبذور"]
+    C --> D["3. Extend High-Scoring Seeds<br/>3. تمديد البذور عالية الدرجات"]
+    D --> E["4. Evaluate Significance<br/>4. تقييم الأهمية"]
+    E --> F["Alignment Report<br/>تقرير المحاذاة"]
 
+    style A fill:#e1f5ff
     style C fill:#ffe1e1
-    style D fill:#e1ffe1
-    style G fill:#e1f5ff
+    style E fill:#e1ffe1
 ```
 
-**المفاهيم الرئيسية**:
+**خط أنابيب BLAST:**
 
-- **H0** (الفرضية الصفرية): لا يوجد فرق/تأثير (افتراض افتراضي)
-- **H1** (الفرضية البديلة): يوجد فرق/تأثير
-- **قيمة p**: احتمال ملاحظة بيانات بهذا التطرف **إذا كانت H0 صحيحة**
-- **α** (مستوى الدلالة): عتبة رفض H0 (عادة 0.05)
+1. **البذور**: تقسيم الاستعلام إلى كلمات (k-mers، عادة k=3 للبروتينات، k=11 لـ DNA)
+2. **المسح**: إيجاد تطابقات دقيقة في قاعدة البيانات (بذور)
+3. **التمديد**: تمديد البذور في كلا الاتجاهين
+4. **التقييم**: حساب الأهمية الإحصائية (قيمة E)
 
-!!! danger "تفسير قيمة P"
-    **ما تعنيه قيمة p**:
-    > "إذا لم يكن هناك حقاً أي فرق، سنرى بيانات بهذا التطرف p% من الوقت بالصدفة العشوائية"
-
-    **ما لا تعنيه قيمة p**:
-    - ❌ "احتمال أن تكون H0 صحيحة"
-    - ❌ "احتمال الإيجابية الكاذبة"
-    - ❌ "أهمية النتيجة"
-    - ❌ "إثبات أي شيء"
-
-### 4.2 اختبارات t
-
-**استخدم عندما**: مقارنة متوسطات البيانات المستمرة، الموزعة بشكل طبيعي
-
-=== "اختبار t للعينتين"
-    **السؤال**: هل مستويات التعبير الجيني مختلفة بين حالتين؟
-
+=== "توليد الكلمات (البذور)"
     ```python
-    from scipy import stats
-    import numpy as np
+    def generate_seeds(sequence, word_size=3, threshold=11):
+        """
+        توليد بذور BLAST (الكلمات عالية الدرجات).
 
-    # التعبير الجيني في حالتين
-    control = [23, 45, 34, 67, 42, 38, 51, 29]
-    treatment = [78, 91, 85, 102, 88, 95, 79, 84]
+        للبروتينات:
+        - word_size: عادة 3
+        - threshold: الحد الأدنى للدرجة لكلمات الجوار
+        """
+        from Bio.SubsMat import MatrixInfo
+        blosum62 = MatrixInfo.blosum62
 
-    # اختبار t للعينتين (بافتراض تباينات متساوية)
-    t_stat, p_value = stats.ttest_ind(control, treatment)
+        seeds = []
 
-    print(f"Control mean: {np.mean(control):.2f}")
-    print(f"Treatment mean: {np.mean(treatment):.2f}")
-    print(f"t-statistic: {t_stat:.3f}")
-    print(f"p-value: {p_value:.4f}")
+        # توليد كل k-mers من الاستعلام
+        for i in range(len(sequence) - word_size + 1):
+            word = sequence[i:i+word_size]
 
-    if p_value < 0.05:
-        print("Significant difference (p < 0.05)")
-    else:
-        print("No significant difference (p ≥ 0.05)")
+            # الكلمة الأصلية دائماً بذرة
+            seeds.append(word)
 
-    # حجم التأثير (Cohen's d)
-    pooled_std = np.sqrt((np.var(control, ddof=1) + np.var(treatment, ddof=1)) / 2)
-    cohens_d = (np.mean(treatment) - np.mean(control)) / pooled_std
-    print(f"Effect size (Cohen's d): {cohens_d:.2f}")
+            # لـ BLAST، تضمين أيضاً الجيران عاليي الدرجات
+            # (نسخة مبسطة - BLAST الحقيقي أكثر تعقيداً)
+
+        return seeds
+
+    # مثال
+    query = "ACDEFGHIKLMNPQRSTVWY"
+    seeds = generate_seeds(query, word_size=3)
+    print(f"Generated {len(seeds)} seeds")
+    print(f"First 5 seeds: {seeds[:5]}")
     ```
 
-=== "اختبار t المزدوج"
-    **السؤال**: هل هناك تغيير قبل وبعد العلاج (نفس الموضوعات)؟
-
+=== "التمديد (مبسط)"
     ```python
-    # التعبير الجيني قبل وبعد العلاج (عينات مزدوجة)
-    before = [45, 67, 52, 78, 61, 54, 48, 59]
-    after =  [52, 71, 58, 85, 68, 59, 53, 64]
+    def extend_seed(seq1, seq2, seed_pos1, seed_pos2, threshold=30):
+        """
+        تمديد تطابق البذرة في كلا الاتجاهين.
 
-    # اختبار t المزدوج
-    t_stat, p_value = stats.ttest_rel(before, after)
+        يستمر التمديد طالما بقيت الدرجة فوق العتبة.
+        """
+        from Bio.SubsMat import MatrixInfo
+        blosum62 = MatrixInfo.blosum62
 
-    print(f"Mean change: {np.mean(np.array(after) - np.array(before)):.2f}")
-    print(f"t-statistic: {t_stat:.3f}")
-    print(f"p-value: {p_value:.4f}")
+        # التمديد لليمين
+        score = 0
+        max_score = 0
+        max_pos = 0
+
+        i = seed_pos1
+        j = seed_pos2
+
+        while i < len(seq1) and j < len(seq2):
+            pair = (seq1[i], seq2[j])
+            score += blosum62.get(pair, blosum62.get(pair[::-1], -4))
+
+            if score > max_score:
+                max_score = score
+                max_pos = i
+
+            # التوقف إذا انخفضت الدرجة كثيراً تحت الحد الأقصى
+            if score < max_score - threshold:
+                break
+
+            i += 1
+            j += 1
+
+        # منطق مماثل للتمديد لليسار (محذوف للإيجاز)
+
+        return max_score, max_pos
     ```
 
-=== "اختبار Welch's t"
-    **استخدم عندما**: التباينات غير متساوية بين المجموعات
-
+=== "استخدام NCBI BLAST"
     ```python
-    # عندما تختلف التباينات (افتراضي أكثر أماناً)
-    t_stat, p_value = stats.ttest_ind(control, treatment, equal_var=False)
-    print(f"Welch's t-test p-value: {p_value:.4f}")
+    from Bio.Blast import NCBIWWW, NCBIXML
+    from Bio import SeqIO
+
+    # قراءة تسلسل الاستعلام
+    query_seq = SeqIO.read("query.fasta", "fasta")
+
+    # تشغيل بحث BLAST (يستغرق وقتاً - يُرسل إلى خادم NCBI)
+    result_handle = NCBIWWW.qblast(
+        program="blastp",      # BLAST للبروتينات
+        database="nr",         # قاعدة بيانات البروتينات غير المتكررة
+        sequence=query_seq.seq,
+        expect=0.001,          # عتبة قيمة E
+        hitlist_size=50        # الحد الأقصى للنتائج المرجعة
+    )
+
+    # حفظ النتائج
+    with open("blast_results.xml", "w") as out:
+        out.write(result_handle.read())
+    result_handle.close()
+
+    # تحليل النتائج
+    with open("blast_results.xml") as result:
+        blast_records = NCBIXML.parse(result)
+
+        for blast_record in blast_records:
+            print(f"Query: {blast_record.query}")
+            print(f"Database: {blast_record.database}")
+            print(f"Number of hits: {len(blast_record.alignments)}\n")
+
+            for alignment in blast_record.alignments[:5]:
+                for hsp in alignment.hsps:
+                    if hsp.expect < 0.001:
+                        print(f"Hit: {alignment.title}")
+                        print(f"E-value: {hsp.expect}")
+                        print(f"Score: {hsp.score}")
+                        print(f"Identities: {hsp.identities}/{hsp.align_length}")
+                        print(f"Query:  {hsp.query}")
+                        print(f"Match:  {hsp.match}")
+                        print(f"Subject: {hsp.sbjct}\n")
     ```
 
-**الافتراضات**:
-- البيانات موزعة بشكل طبيعي تقريباً
-- العينات مستقلة (باستثناء اختبار t المزدوج)
-- تباينات متساوية (لاختبار t القياسي، وليس Welch's)
+### 3.3 أنواع BLAST
 
-### 4.3 ANOVA (تحليل التباين)
+| البرنامج | الاستعلام | قاعدة البيانات | حالة الاستخدام |
+|---------|-------|----------|----------|
+| **blastn** | نيوكليوتيد | نيوكليوتيد | DNA ضد DNA (إيجاد الجينات) |
+| **blastp** | بروتين | بروتين | بروتين ضد بروتين (الوظيفة) |
+| **blastx** | نيوكليوتيد (مترجم) | بروتين | استعلام DNA ضد قاعدة بيانات البروتينات |
+| **tblastn** | بروتين | نيوكليوتيد (مترجم) | بروتين ضد قاعدة بيانات DNA |
+| **tblastx** | نيوكليوتيد (مترجم) | نيوكليوتيد (مترجم) | DNA ضد DNA (6 إطارات) |
 
-**استخدم عندما**: مقارنة المتوسطات عبر >2 مجموعات
+??? example "اختيار BLAST المناسب"
+    **السيناريو 1**: لديك تسلسل بروتين جديد وتريد إيجاد بروتينات مماثلة
+    - **استخدم**: `blastp` ضد `nr` (البروتينات غير المتكررة)
+
+    **السيناريو 2**: لديك تسلسل DNA، تشك أنه يرمز لبروتين مشابه للبروتينات المعروفة
+    - **استخدم**: `blastx` ضد `nr` (يترجم DNA الخاص بك في جميع الإطارات الستة)
+
+    **السيناريو 3**: تريد إيجاد أين قد يكون بروتينك مرمزاً في جينوم
+    - **استخدم**: `tblastn` ضد قاعدة بيانات الجينوم
+
+    **السيناريو 4**: تريد إيجاد مناطق جينومية مشابهة
+    - **استخدم**: `blastn` للعلاقات القريبة، `tblastx` للعلاقات البعيدة
+
+### 3.4 فهم قيم E والدرجات البتية
+
+**قيمة E (القيمة المتوقعة)**: عدد المحاذاة بهذه الدرجة المتوقعة بالصدفة
+
+!!! tip "تفسير قيمة E"
+    - **E < 10^-50**: تسلسلات متطابقة أو شبه متطابقة
+    - **E < 10^-10**: متشابهة جداً، على الأرجح متماثلة
+    - **E < 0.01**: تطابق جيد، ربما متماثلة
+    - **E < 1**: تطابق محتمل، يحتاج تحقق
+    - **E > 10**: على الأرجح تطابق عشوائي
+
+**الدرجة البتية**: درجة موحدة مستقلة عن حجم قاعدة البيانات
 
 ```python
-from scipy import stats
+def calculate_bit_score(raw_score, lambda_param=0.267, K=0.0410):
+    """
+    تحويل الدرجة الخام إلى درجة بتية.
 
-# التعبير الجيني في 4 أنسجة مختلفة
-tissue1 = [45, 52, 48, 51, 46]
-tissue2 = [78, 82, 75, 80, 77]
-tissue3 = [34, 38, 32, 36, 35]
-tissue4 = [91, 95, 89, 93, 90]
+    الدرجة البتية = (λ × S - ln K) / ln 2
 
-# ANOVA أحادي الاتجاه
-f_stat, p_value = stats.f_oneway(tissue1, tissue2, tissue3, tissue4)
+    حيث λ و K معاملات Karlin-Altschul
+    """
+    import math
+    bit_score = (lambda_param * raw_score - math.log(K)) / math.log(2)
+    return bit_score
 
-print(f"F-statistic: {f_stat:.3f}")
-print(f"p-value: {p_value:.6f}")
+def calculate_e_value(bit_score, query_length, db_size):
+    """
+    حساب قيمة E من الدرجة البتية.
 
-if p_value < 0.05:
-    print("At least one tissue is significantly different")
+    قيمة E = m × n × 2^(-S)
 
-    # مقارنات زوجية بعد الحدث (Tukey HSD)
-    from scipy.stats import tukey_hsd
+    حيث m = طول الاستعلام، n = حجم قاعدة البيانات، S = الدرجة البتية
+    """
+    e_value = query_length * db_size * (2 ** (-bit_score))
+    return e_value
 
-    all_data = tissue1 + tissue2 + tissue3 + tissue4
-    groups = (['T1']*5 + ['T2']*5 + ['T3']*5 + ['T4']*5)
+# مثال
+raw_score = 150
+query_len = 250
+db_size = 10**9  # مليار بقايا
 
-    # ملاحظة: للإنتاج، استخدم statsmodels لـ Tukey HSD المناسب
-    print("\nPerform pairwise t-tests with Bonferroni correction:")
-    from itertools import combinations
-    tissues = [tissue1, tissue2, tissue3, tissue4]
-    names = ['T1', 'T2', 'T3', 'T4']
-    n_comparisons = 6  # 4 اختر 2
+bit_score = calculate_bit_score(raw_score)
+e_value = calculate_e_value(bit_score, query_len, db_size)
 
-    for (i, t1), (j, t2) in combinations(enumerate(tissues), 2):
-        _, p = stats.ttest_ind(t1, t2)
-        p_adj = p * n_comparisons  # Bonferroni
-        print(f"{names[i]} vs {names[j]}: p = {p:.4f}, adjusted p = {min(p_adj, 1.0):.4f}")
+print(f"Raw Score: {raw_score}")
+print(f"Bit Score: {bit_score:.1f}")
+print(f"E-value: {e_value:.2e}")
 ```
-
-### 4.4 الاختبارات اللامعلمية
-
-**استخدم عندما**: تنتهك البيانات افتراض الطبيعية (منحرفة، قيم شاذة)
-
-=== "اختبار Mann-Whitney U"
-    **استخدم عندما**: مجموعتان مستقلتان، بيانات غير طبيعية
-
-    ```python
-    from scipy import stats
-
-    # بيانات وفرة البروتين المنحرفة
-    control = [12, 15, 18, 14, 156, 13, 17, 16]  # قيمة شاذة واحدة
-    treatment = [45, 52, 48, 51, 234, 46, 50, 49]
-
-    # اختبار Mann-Whitney U (بديل لامعلمي لاختبار t)
-    u_stat, p_value = stats.mannwhitneyu(control, treatment, alternative='two-sided')
-
-    print(f"Control median: {np.median(control):.1f}")
-    print(f"Treatment median: {np.median(treatment):.1f}")
-    print(f"U-statistic: {u_stat:.3f}")
-    print(f"p-value: {p_value:.4f}")
-    ```
-
-=== "اختبار Wilcoxon Signed-Rank"
-    **استخدم عندما**: عينات مزدوجة، بيانات غير طبيعية
-
-    ```python
-    # بيانات مزدوجة غير طبيعية
-    before = [12, 15, 18, 156, 13, 17, 16, 19]
-    after =  [45, 52, 48, 234, 46, 50, 49, 51]
-
-    # اختبار Wilcoxon signed-rank
-    w_stat, p_value = stats.wilcoxon(before, after)
-
-    print(f"Median difference: {np.median(np.array(after) - np.array(before)):.1f}")
-    print(f"W-statistic: {w_stat:.3f}")
-    print(f"p-value: {p_value:.4f}")
-    ```
-
-=== "اختبار Kruskal-Wallis"
-    **استخدم عندما**: >2 مجموعات مستقلة، بيانات غير طبيعية
-
-    ```python
-    # بديل لامعلمي لـ ANOVA
-    h_stat, p_value = stats.kruskal(tissue1, tissue2, tissue3, tissue4)
-
-    print(f"H-statistic: {h_stat:.3f}")
-    print(f"p-value: {p_value:.6f}")
-    ```
 
 ---
 
-## 5. مشكلة الاختبارات المتعددة
+## 4. محاذاة التسلسلات المتعددة (MSA)
 
-### 5.1 لماذا تهم الاختبارات المتعددة
+### 4.1 لماذا المحاذاة المتعددة؟
 
-**المشكلة**: عند اختبار آلاف الفرضيات، تتراكم الإيجابيات الكاذبة
+**التطبيقات:**
 
-**مثال**: RNA-seq مع 20,000 جين
+1. **التحليل الفيلوجيني**: بناء أشجار التطور
+2. **تحديد المناطق المحفوظة**: إيجاد النطاقات الوظيفية
+3. **التنبؤ بالبنية**: المناطق المحفوظة غالباً لها بنية محفوظة
+4. **اكتشاف الأنماط**: تحديد مواقع الارتباط أو المواقع النشطة
 
-```python
-import numpy as np
+**التحدي**: MSA المثلى هي NP-complete
 
-n_genes = 20000
-alpha = 0.05
+- **3 تسلسلات**: O(n³) - ممكن
+- **k تسلسلات**: O(n^k) - غير قابل للحل لـ k > 10
 
-# الإيجابيات الكاذبة المتوقعة إذا كانت جميع الصفرات صحيحة
-expected_fps = n_genes * alpha
-print(f"Expected false positives: {expected_fps:.0f}")
+**الحل**: استدلال المحاذاة التدريجية (ClustalW, MUSCLE, MAFFT)
 
-# محاكاة الاختبار بدون اختلافات حقيقية
-np.random.seed(42)
-p_values = np.random.uniform(0, 1, n_genes)  # قيم p الصفرية موحدة
+### 4.2 استراتيجية المحاذاة التدريجية
 
-# بدون تصحيح
-significant_uncorrected = sum(p_values < alpha)
-print(f"Significant genes (uncorrected): {significant_uncorrected}")
-print(f"False positive rate: {significant_uncorrected/n_genes*100:.1f}%")
+```mermaid
+graph TB
+    A["Input Sequences<br/>التسلسلات المدخلة"] --> B["1. Pairwise Distance Matrix<br/>1. مصفوفة المسافات الزوجية"]
+    B --> C["2. Build Guide Tree<br/>2. بناء شجرة الدليل"]
+    C --> D["3. Progressive Alignment<br/>3. المحاذاة التدريجية"]
+    D --> E["Align Most Similar Sequences<br/>محاذاة التسلسلات الأكثر تشابهاً"]
+    E --> F["Align to Next Sequence/Group<br/>المحاذاة إلى التسلسل/المجموعة التالية"]
+    F --> G{"All Aligned?<br/>كل المحاذاة؟"}
+    G -->|"No<br/>لا"| F
+    G -->|"Yes<br/>نعم"| H["Final MSA<br/>MSA النهائية"]
+
+    style A fill:#e1f5ff
+    style C fill:#ffe1e1
+    style H fill:#e1ffe1
 ```
 
-### 5.2 طرق تصحيح الاختبارات المتعددة
-
-=== "تصحيح Bonferroni"
-    **الاستراتيجية**: قسم α على عدد الاختبارات
-
-    **يتحكم في**: معدل الخطأ على مستوى العائلة (FWER) - احتمال ≥1 إيجابية كاذبة
-
-    **محافظ جداً** - قد يفوت الإيجابيات الحقيقية
-
+=== "استخدام ClustalW"
     ```python
-    n_tests = 20000
-    alpha_bonf = 0.05 / n_tests
+    from Bio.Align.Applications import ClustalwCommandline
+    from Bio import AlignIO
 
-    print(f"Bonferroni threshold: {alpha_bonf:.2e}")
+    # إعداد ملف الإدخال بتسلسلات متعددة
+    input_file = "sequences.fasta"
+    output_file = "aligned.aln"
 
-    significant_bonf = sum(p_values < alpha_bonf)
-    print(f"Significant genes (Bonferroni): {significant_bonf}")
+    # تشغيل ClustalW
+    clustalw_cmd = ClustalwCommandline(
+        "clustalw2",
+        infile=input_file
+    )
+
+    stdout, stderr = clustalw_cmd()
+
+    # قراءة المحاذاة
+    alignment = AlignIO.read("sequences.aln", "clustal")
+
+    print(f"Alignment length: {alignment.get_alignment_length()}")
+    print(f"Number of sequences: {len(alignment)}")
+
+    # عرض المحاذاة
+    print(alignment)
+
+    # حساب درجة الحفظ
+    from Bio.Align import AlignInfo
+    summary = AlignInfo.SummaryInfo(alignment)
+    consensus = summary.dumb_consensus(threshold=0.7)
+    print(f"Consensus: {consensus}")
     ```
 
-=== "Benjamini-Hochberg (FDR)"
-    **الاستراتيجية**: التحكم في معدل الاكتشاف الكاذب (نسبة الإيجابيات الكاذبة)
-
-    **معيار لعلم الجينوم** - توازن جيد بين الحساسية والنوعية
-
+=== "استخدام MUSCLE"
     ```python
-    from scipy.stats import false_discovery_control
+    from Bio.Align.Applications import MuscleCommandline
+    from Bio import AlignIO
 
-    # تصحيح Benjamini-Hochberg FDR
-    p_values_sorted = np.sort(p_values)
-    n = len(p_values)
-    fdr_level = 0.05
+    # MUSCLE أسرع وغالباً أكثر دقة من ClustalW
+    muscle_cmd = MuscleCommandline(
+        input="sequences.fasta",
+        out="aligned_muscle.fasta"
+    )
 
-    # إجراء BH
-    critical_values = np.arange(1, n+1) / n * fdr_level
+    stdout, stderr = muscle_cmd()
 
-    # ابحث عن أكبر i حيث p(i) <= (i/n)*alpha
-    reject = p_values_sorted <= critical_values
-    if any(reject):
-        threshold = p_values_sorted[reject][-1]
-    else:
-        threshold = 0
-
-    significant_fdr = sum(p_values <= threshold)
-    print(f"BH threshold: {threshold:.4f}")
-    print(f"Significant genes (FDR < 0.05): {significant_fdr}")
-
-    # استخدام statsmodels
-    from statsmodels.stats.multitest import multipletests
-    reject, pvals_corrected, _, _ = multipletests(p_values, alpha=0.05, method='fdr_bh')
-    print(f"Significant genes (statsmodels): {sum(reject)}")
+    # القراءة والعرض
+    alignment = AlignIO.read("aligned_muscle.fasta", "fasta")
+    print(alignment)
     ```
 
-=== "قيم q"
-    **التفسير**: الحد الأدنى لـ FDR الذي ستكون هذه النتيجة معنوية عنده
-
-    **بديهي**: "q < 0.05" يعني "على الأكثر 5% من النتائج بهذه الدلالة كاذبة"
-
+=== "استخدام MAFFT"
     ```python
-    # حساب قيمة q (مبسط)
-    from scipy.interpolate import interp1d
+    from Bio.Align.Applications import MafftCommandline
 
-    def calculate_qvalues(pvals):
-        """حساب قيمة q المبسط"""
-        pvals = np.array(pvals)
-        n = len(pvals)
+    # MAFFT سريع جداً للمحاذاة الكبيرة
+    mafft_cmd = MafftCommandline(
+        input="sequences.fasta"
+    )
 
-        # فرز قيم p
-        sort_idx = np.argsort(pvals)
-        pvals_sorted = pvals[sort_idx]
+    stdout, stderr = mafft_cmd()
 
-        # حساب قيم q
-        qvals = np.zeros(n)
-        prev_q = 0
+    # stdout يحتوي على المحاذاة
+    with open("aligned_mafft.fasta", "w") as f:
+        f.write(stdout)
 
-        for i in range(n-1, -1, -1):
-            q = min(pvals_sorted[i] * n / (i + 1), prev_q if i < n-1 else 1)
-            qvals[i] = min(q, 1.0)
-            prev_q = qvals[i]
-
-        # استعادة الترتيب الأصلي
-        qvals_original = np.zeros(n)
-        qvals_original[sort_idx] = qvals
-
-        return qvals_original
-
-    qvals = calculate_qvalues(p_values)
-    significant_q = sum(qvals < 0.05)
-    print(f"Significant genes (q < 0.05): {significant_q}")
+    alignment = AlignIO.read("aligned_mafft.fasta", "fasta")
+    print(alignment)
     ```
 
-**جدول المقارنة**:
+### 4.3 تقييم جودة المحاذاة
 
-| الطريقة | يتحكم في | الصرامة | الأفضل لـ |
-|--------|----------|------------|----------|
-| **بدون تصحيح** | لا شيء | لا شيء | اختبار واحد فقط |
-| **Bonferroni** | FWER | صارم جداً | اختبارات قليلة، تحتاج إلى يقين |
-| **FDR (BH)** | معدل الاكتشاف الكاذب | معتدل | علم الجينوم (معيار) |
-| **قيم q** | FDR | معتدل | تفسير سهل |
+```python
+def calculate_conservation_scores(alignment):
+    """
+    حساب درجة الحفظ لكل موضع.
+
+    إرجاع قائمة الدرجات (0-1) حيث 1 = محفوظة تماماً
+    """
+    scores = []
+    length = alignment.get_alignment_length()
+    num_seqs = len(alignment)
+
+    for i in range(length):
+        column = alignment[:, i]
+
+        # عد الحرف الأكثر تكراراً
+        from collections import Counter
+        counts = Counter(column)
+        most_common_count = counts.most_common(1)[0][1]
+
+        # الحفظ = تكرار الحرف الأكثر شيوعاً
+        conservation = most_common_count / num_seqs
+        scores.append(conservation)
+
+    return scores
+
+def identify_conserved_regions(alignment, threshold=0.8, min_length=5):
+    """
+    تحديد المناطق المحفوظة جداً في المحاذاة.
+    """
+    scores = calculate_conservation_scores(alignment)
+
+    regions = []
+    in_region = False
+    start = 0
+
+    for i, score in enumerate(scores):
+        if score >= threshold and not in_region:
+            start = i
+            in_region = True
+        elif score < threshold and in_region:
+            if i - start >= min_length:
+                regions.append((start, i, sum(scores[start:i])/(i-start)))
+            in_region = False
+
+    return regions
+
+# مثال الاستخدام
+alignment = AlignIO.read("aligned.fasta", "fasta")
+conserved = identify_conserved_regions(alignment, threshold=0.8)
+
+print("المناطق المحفوظة:")
+for start, end, score in conserved:
+    print(f"  الموضع {start}-{end}: {score:.2f} حفظ")
+```
 
 ---
 
-## 6. القوة الإحصائية وحجم العينة
+## 5. التحليل الفيلوجيني
 
-### 6.1 فهم القوة
+### 5.1 من المحاذاة إلى النشوء والتطور
 
-**القوة الإحصائية**: احتمال اكتشاف تأثير حقيقي عند وجوده
+بمجرد محاذاة التسلسلات، يمكننا استنتاج العلاقات التطورية.
 
-**العوامل المؤثرة على القوة**:
+**الطرق القائمة على المسافة:**
 
-1. **حجم التأثير**: اختلافات أكبر → قوة أعلى
-2. **حجم العينة**: المزيد من العينات → قوة أعلى
-3. **التباين**: ضوضاء أقل → قوة أعلى
-4. **مستوى الدلالة**: α أعلى → قوة أعلى (لكن المزيد من الإيجابيات الكاذبة)
+1. **UPGMA** (طريقة المجموعات الزوجية غير الموزونة بالمتوسط الحسابي)
+   - بسيطة، تفترض ساعة جزيئية
+   - سريعة لكن أقل دقة
 
-```python
-from statsmodels.stats.power import ttest_power
+2. **Neighbor-Joining**
+   - أكثر دقة من UPGMA
+   - لا تفترض ساعة جزيئية
+   - المعيار الصناعي لطرق المسافة
 
-# حساب القوة لسيناريوهات مختلفة
-effect_sizes = [0.2, 0.5, 0.8, 1.0, 1.5]  # Cohen's d
-sample_sizes = [5, 10, 20, 50, 100]
-alpha = 0.05
-
-print("Power for two-sample t-test (α = 0.05):")
-print("\n      Sample Size")
-print("Effect", end="")
-for n in sample_sizes:
-    print(f"  n={n:3d}", end="")
-print()
-
-for effect in effect_sizes:
-    print(f"d={effect:.1f}", end="  ")
-    for n in sample_sizes:
-        power = ttest_power(effect, n, alpha, alternative='two-sided')
-        print(f"{power:.2f}  ", end="")
-    print()
-```
-
-### 6.2 حساب حجم العينة
-
-**قبل التجارب**: تحديد حجم العينة المطلوب للقوة المطلوبة
-
-```python
-from statsmodels.stats.power import tt_solve_power
-
-# كم عدد العينات المطلوبة للكشف عن حجم التأثير = 0.8 مع قوة 80%؟
-required_n = tt_solve_power(
-    effect_size=0.8,
-    alpha=0.05,
-    power=0.80,
-    alternative='two-sided'
-)
-
-print(f"Required sample size per group: {np.ceil(required_n):.0f}")
-
-# لـ RNA-seq: المعلمات النموذجية
-effect_size = 0.5  # تغيير log2 fold
-desired_power = 0.80
-alpha = 0.05
-
-required_n_rnaseq = tt_solve_power(effect_size, alpha, desired_power, alternative='two-sided')
-print(f"\nRNA-seq recommended n per group: {np.ceil(required_n_rnaseq):.0f}")
-```
-
-!!! tip "الدراسات ضعيفة القوة مهدرة"
-    دراسة بقوة 20%:
-
-    - احتمال 80% **لتفويت** تأثير حقيقي (سلبي كاذب)
-    - تهدر الوقت والمال والموارد
-    - تساهم في الأدبيات غير القابلة للتكرار
-
-    **احسب دائماً حجم العينة المطلوب قبل التجارب!**
-
----
-
-## 7. أفضل ممارسات التصور
-
-### 7.1 استكشاف التوزيعات
-
-=== "الرسم البياني"
+=== "حساب مصفوفة المسافات"
     ```python
+    from Bio import Phylo
+    from Bio.Phylo.TreeConstruction import DistanceCalculator, DistanceTreeConstructor
+    from Bio import AlignIO
+
+    # تحميل المحاذاة
+    alignment = AlignIO.read("aligned_proteins.fasta", "fasta")
+
+    # حساب مصفوفة المسافات
+    calculator = DistanceCalculator('blosum62')
+    distance_matrix = calculator.get_distance(alignment)
+
+    print("مصفوفة المسافات:")
+    print(distance_matrix)
+    ```
+
+=== "بناء شجرة Neighbor-Joining"
+    ```python
+    from Bio.Phylo.TreeConstruction import DistanceTreeConstructor
+
+    # بناء شجرة باستخدام Neighbor-Joining
+    constructor = DistanceTreeConstructor(calculator, 'nj')
+    tree = constructor.build_tree(alignment)
+
+    # عرض الشجرة في ASCII
+    Phylo.draw_ascii(tree)
+
+    # حفظ الشجرة بتنسيق Newick
+    Phylo.write(tree, "tree.nwk", "newick")
+
+    # تصور الشجرة (يتطلب matplotlib)
     import matplotlib.pyplot as plt
-    import numpy as np
-
-    # بيانات التعبير الجيني
-    np.random.seed(42)
-    expression = np.random.lognormal(mean=5, sigma=1.5, size=1000)
-
-    plt.figure(figsize=(12, 5))
-
-    # الرسم البياني
-    plt.subplot(1, 2, 1)
-    plt.hist(expression, bins=50, edgecolor='black', alpha=0.7)
-    plt.xlabel('Expression Level')
-    plt.ylabel('Frequency')
-    plt.title('Histogram: Gene Expression Distribution')
-    plt.grid(True, alpha=0.3)
-
-    # محول اللوغاريتم
-    plt.subplot(1, 2, 2)
-    plt.hist(np.log10(expression), bins=50, edgecolor='black', alpha=0.7, color='orange')
-    plt.xlabel('Log10(Expression Level)')
-    plt.ylabel('Frequency')
-    plt.title('Histogram: Log-Transformed (More Normal)')
-    plt.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('distribution_histogram.png', dpi=150, bbox_inches='tight')
+    fig = plt.figure(figsize=(10, 8))
+    Phylo.draw(tree, do_show=False)
+    plt.savefig("phylogenetic_tree.png", dpi=300, bbox_inches='tight')
     ```
 
-=== "رسوم الصندوق والكمان"
+=== "بناء شجرة UPGMA"
     ```python
-    import seaborn as sns
-    import pandas as pd
+    # بناء شجرة UPGMA
+    constructor_upgma = DistanceTreeConstructor(calculator, 'upgma')
+    tree_upgma = constructor_upgma.build_tree(alignment)
 
-    # التعبير عبر الحالات
-    np.random.seed(42)
-    data = {
-        'Condition': ['Control']*50 + ['Treatment']*50,
-        'Expression': list(np.random.normal(100, 20, 50)) +
-                      list(np.random.normal(150, 25, 50))
+    print("شجرة UPGMA:")
+    Phylo.draw_ascii(tree_upgma)
+    ```
+
+### 5.2 تحليل Bootstrap
+
+**Bootstrap**: تقييم الثقة في طوبولوجيا الشجرة
+
+```python
+def bootstrap_trees(alignment, num_replicates=100):
+    """
+    توليد أشجار نسخ bootstrap.
+    """
+    from Bio.Phylo.TreeConstruction import DistanceCalculator, DistanceTreeConstructor
+    import random
+
+    calculator = DistanceCalculator('blosum62')
+    constructor = DistanceTreeConstructor(calculator, 'nj')
+
+    trees = []
+    length = alignment.get_alignment_length()
+
+    for _ in range(num_replicates):
+        # إنشاء نسخة bootstrap بأخذ عينات من الأعمدة مع الاستبدال
+        columns = [random.randint(0, length-1) for _ in range(length)]
+
+        # إنشاء محاذاة جديدة من الأعمدة المأخوذة
+        bootstrap_aln = alignment[:, columns[0]:columns[0]+1]
+        for col in columns[1:]:
+            bootstrap_aln += alignment[:, col:col+1]
+
+        # بناء شجرة
+        tree = constructor.build_tree(bootstrap_aln)
+        trees.append(tree)
+
+    return trees
+
+# حساب دعم bootstrap
+alignment = AlignIO.read("aligned.fasta", "fasta")
+bootstrap_trees_list = bootstrap_trees(alignment, num_replicates=100)
+
+# التنفيذ الحقيقي سيحسب قيم الدعم لكل فرع
+print(f"Generated {len(bootstrap_trees_list)} bootstrap trees")
+```
+
+---
+
+## 6. تعقيد الخوارزميات والاعتبارات العملية
+
+### 6.1 ملخص التعقيد
+
+| الخوارزمية | الوقت | المساحة | تضمن الأمثلية؟ | الحد العملي |
+|-----------|------|-------|---------------------|-----------------|
+| Needleman-Wunsch | O(mn) | O(mn) | نعم (شاملة) | ~10,000 bp |
+| Smith-Waterman | O(mn) | O(mn) | نعم (محلية) | ~10,000 bp |
+| BLAST | O(n) متوسط | O(n) | لا | قواعد بيانات كاملة |
+| ClustalW | O(N²L²) | O(NL) | لا | ~100 تسلسل |
+| MUSCLE | O(N²L) | O(NL) | لا | ~1,000 تسلسل |
+| MAFFT | O(NL²) | O(NL) | لا | ~10,000 تسلسل |
+
+*N = عدد التسلسلات، L = طول التسلسل، m,n = أطوال التسلسلين*
+
+### 6.2 اختيار الأداة المناسبة
+
+??? example "شجرة القرار لتحليل التسلسلات"
+    **الخطوة 1: ما نوع المقارنة؟**
+
+    - تسلسلان → محاذاة ثنائية (الخطوة 2)
+    - بحث في قاعدة بيانات → BLAST (الخطوة 3)
+    - تسلسلات متعددة → MSA (الخطوة 4)
+
+    **الخطوة 2: محاذاة ثنائية**
+
+    - تسلسلات <10,000 bp، نحتاج أمثلية → برمجة ديناميكية
+        - مقارنة تسلسلات كاملة → Needleman-Wunsch
+        - إيجاد تشابه محلي → Smith-Waterman
+    - تسلسلات >10,000 bp → استخدم BLAST بتسلسلين
+
+    **الخطوة 3: بحث في قاعدة بيانات**
+
+    - استخدم دائماً BLAST (أو أدوات متخصصة مثل HMMs للنطاقات)
+    - اختر النوع بناءً على أنواع الاستعلام/قاعدة البيانات
+
+    **الخطوة 4: محاذاة متعددة**
+
+    - <20 تسلسل → ClustalW أو MUSCLE
+    - 20-1000 تسلسل → MUSCLE
+    - >1000 تسلسل → MAFFT
+
+### 6.3 أفضل الممارسات
+
+!!! tip "استراتيجيات التحسين"
+    **1. الترشيح المسبق لعمليات البحث في قواعد البيانات**
+    ```python
+    # استخدم مرشح التعقيد المنخفض لتقليل التطابقات الزائفة
+    from Bio.Blast import NCBIWWW
+
+    result = NCBIWWW.qblast(
+        "blastp", "nr", sequence,
+        filter="L",  # مرشح التعقيد المنخفض
+        expect=0.001
+    )
+    ```
+
+    **2. استخدم حجم الكلمة المناسب**
+    - متماثلات بعيدة: حجم كلمة أصغر (أكثر حساسية، أبطأ)
+    - متماثلات قريبة: حجم كلمة أكبر (أسرع، أقل حساسية)
+
+    **3. ضبط عتبة قيمة E**
+    - محافظ (نتائج إيجابية خاطئة قليلة): E < 10^-10
+    - استكشافي (إيجاد متماثلات بعيدة): E < 0.01
+
+    **4. لـ MSA، إزالة التسلسلات المتكررة**
+    ```python
+    def remove_redundant(sequences, identity_threshold=0.9):
+        """إزالة التسلسلات ذات التطابق >العتبة."""
+        # استخدم CD-HIT أو أدوات مماثلة
+        # هذا يقلل وقت الحساب بشكل كبير
+        pass
+    ```
+
+---
+
+## 7. التمارين العملية
+
+### التمرين 1: المحاذاة الثنائية
+
+**المهمة**: تنفيذ دالة محاذاة شاملة بسيطة ومقارنتها مع Biopython.
+
+??? example "قالب الحل"
+    ```python
+    # 1. تنفيذ Needleman-Wunsch الأساسي
+    # 2. اختبار مع: "ACGT" و "ACT"
+    # 3. المقارنة مع pairwise2.align.globalxx()
+    # 4. تجربة أنظمة تسجيل مختلفة
+
+    def my_alignment(seq1, seq2):
+        # تنفيذك هنا
+        pass
+
+    # اختبار
+    seq1 = "ACGT"
+    seq2 = "ACT"
+    my_result = my_alignment(seq1, seq2)
+
+    from Bio import pairwise2
+    bio_result = pairwise2.align.globalxx(seq1, seq2)
+
+    # مقارنة النتائج
+    ```
+
+### التمرين 2: تحليل BLAST
+
+**المهمة**: إيجاد متماثلات الإنسولين البشري وتحليل قيم E.
+
+??? example "نهج الحل"
+    ```python
+    # 1. الحصول على تسلسل الإنسولين البشري (P01308)
+    # 2. تشغيل BLASTP ضد قاعدة بيانات nr
+    # 3. تحليل النتائج وإنشاء توزيع قيم E
+    # 4. تحديد أفضل 10 متماثلات من أنواع مختلفة
+    # 5. استخراج تسلسلاتها لـ MSA
+
+    from Bio import Entrez, SeqIO
+    from Bio.Blast import NCBIWWW, NCBIXML
+
+    Entrez.email = "your.email@example.com"
+
+    # جلب تسلسل الإنسولين
+    handle = Entrez.efetch(db="protein", id="P01308", rettype="fasta")
+    insulin = SeqIO.read(handle, "fasta")
+    handle.close()
+
+    # تشغيل BLAST (يستغرق عدة دقائق)
+    # result_handle = NCBIWWW.qblast("blastp", "nr", insulin.seq)
+
+    # للتمرين، استخدم نتائج محملة مسبقاً أو قاعدة بيانات صغيرة
+    ```
+
+### التمرين 3: المحاذاة المتعددة والنشوء والتطور
+
+**المهمة**: محاذاة السيتوكروم c من 10 أنواع وبناء شجرة فيلوجينية.
+
+??? example "خطوات الحل"
+    ```python
+    # 1. تنزيل تسلسلات السيتوكروم c من 10 أنواع من الفقاريات
+    # 2. الحفظ في ملف FASTA
+    # 3. تشغيل محاذاة MUSCLE
+    # 4. بناء شجرة Neighbor-Joining
+    # 5. تصور الشجرة
+    # 6. تحديد أي الأنواع تتجمع معاً
+
+    species_ids = {
+        'Human': 'P99999',
+        'Mouse': 'P62897',
+        'Chicken': 'P18292',
+        # أضف المزيد...
     }
-    df = pd.DataFrame(data)
 
-    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-
-    # رسم الصندوق
-    sns.boxplot(data=df, x='Condition', y='Expression', ax=axes[0])
-    axes[0].set_title('Box Plot')
-    axes[0].grid(True, alpha=0.3)
-
-    # رسم الكمان (يظهر التوزيع الكامل)
-    sns.violinplot(data=df, x='Condition', y='Expression', ax=axes[1])
-    axes[1].set_title('Violin Plot (Better)')
-    axes[1].grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('boxplot_violinplot.png', dpi=150, bbox_inches='tight')
+    # تنزيل التسلسلات
+    # تشغيل MUSCLE
+    # بناء الشجرة
+    # تفسير النتائج
     ```
 
-### 7.2 الرسوم الخاصة بـ RNA-seq
+### التمرين 4: تحليل الحفظ
 
-=== "رسم MA"
-    **يظهر**: تغيير log fold مقابل متوسط التعبير
+**المهمة**: تحديد المناطق المحفوظة في تسلسلات الجلوبيولين المناعي المحاذاة.
 
+??? example "التنفيذ"
     ```python
-    # بيانات RNA-seq محاكاة
-    np.random.seed(42)
-    n_genes = 10000
+    # 1. تحميل محاذاة الجلوبيولين المناعي (20+ تسلسل)
+    # 2. حساب درجة الحفظ لكل موضع
+    # 3. تحديد المناطق بحفظ >80%
+    # 4. ربط هذه بـ CDRs المعروفة للأجسام المضادة
+    # 5. تصور الحفظ على طول التسلسل
 
-    mean_expr = np.random.uniform(1, 10000, n_genes)
-    log_fc = np.random.normal(0, 0.5, n_genes)
+    import matplotlib.pyplot as plt
 
-    # إضافة بعض الجينات DE
-    de_idx = np.random.choice(n_genes, 200, replace=False)
-    log_fc[de_idx] += np.random.choice([-2, 2], 200)
-
-    p_values = np.random.uniform(0, 1, n_genes)
-    p_values[de_idx] = np.random.uniform(0, 0.001, 200)
-
-    # رسم MA
-    plt.figure(figsize=(10, 6))
-    plt.scatter(mean_expr, log_fc, c='gray', alpha=0.3, s=10, label='Not significant')
-    plt.scatter(mean_expr[p_values < 0.05], log_fc[p_values < 0.05],
-                c='red', alpha=0.6, s=10, label='p < 0.05')
-    plt.axhline(0, color='blue', linestyle='--', linewidth=2)
-    plt.xlabel('Mean Expression (log scale)')
-    plt.ylabel('Log2 Fold Change')
-    plt.title('MA Plot: Differential Expression')
-    plt.xscale('log')
-    plt.legend()
-    plt.grid(True, alpha=0.3)
-    plt.savefig('ma_plot.png', dpi=150, bbox_inches='tight')
-    ```
-
-=== "رسم البركان"
-    **يظهر**: تغيير log fold مقابل الدلالة
-
-    ```python
-    # رسم البركان
-    neg_log_p = -np.log10(p_values + 1e-300)  # تجنب log(0)
-
-    plt.figure(figsize=(10, 6))
-
-    # تلوين حسب الدلالة وتغيير fold
-    colors = ['gray'] * n_genes
-    for i in range(n_genes):
-        if p_values[i] < 0.05 and abs(log_fc[i]) > 1:
-            colors[i] = 'red'
-        elif p_values[i] < 0.05:
-            colors[i] = 'orange'
-
-    plt.scatter(log_fc, neg_log_p, c=colors, alpha=0.5, s=10)
-
-    # خطوط العتبة
-    plt.axhline(-np.log10(0.05), color='blue', linestyle='--',
-                linewidth=2, label='p = 0.05')
-    plt.axvline(-1, color='green', linestyle='--', linewidth=2)
-    plt.axvline(1, color='green', linestyle='--', linewidth=2, label='FC = ±2')
-
-    plt.xlabel('Log2 Fold Change')
-    plt.ylabel('-Log10(p-value)')
-    plt.title('Volcano Plot: Statistical and Biological Significance')
-    plt.legend()
-    plt.grid(True, alpha=0.3)
-    plt.savefig('volcano_plot.png', dpi=150, bbox_inches='tight')
+    def plot_conservation(scores):
+        plt.figure(figsize=(15, 4))
+        plt.plot(scores)
+        plt.axhline(y=0.8, color='r', linestyle='--', label='عتبة 80%')
+        plt.xlabel('الموضع')
+        plt.ylabel('درجة الحفظ')
+        plt.title('ملف تعريف حفظ التسلسل')
+        plt.legend()
+        plt.show()
     ```
 
 ---
 
-## 8. المزالق الإحصائية الشائعة
-
-### 8.1 P-Hacking (التنقيب عن البيانات)
-
-**ما هو**: التلاعب بالبيانات/التحليل حتى p < 0.05
-
-**أمثلة**:
-- اختبار 20 فرضية مختلفة، الإبلاغ عن "المعنوية" فقط
-- إزالة "القيم الشاذة" لتحقيق الدلالة
-- اختبار نقاط نهاية متعددة، انتقاء النتائج
-- النظر إلى قيم p وإضافة عينات حتى تصبح معنوية
-
-**لماذا هو سيء**: يضخم معدل الإيجابية الكاذبة بشكل كبير فوق 5%
-
-**كيفية التجنب**:
-- حدد التحليلات مسبقاً قبل رؤية البيانات
-- أبلغ عن جميع الاختبارات المجراة
-- استخدم تصحيح الاختبارات المتعددة
-- سجل مسبقاً الدراسات (التجارب السريرية)
-
-### 8.2 تجاهل أحجام التأثير
-
-**المشكلة**: قيم p الصغيرة لا تعني نتائج مهمة
-
-```python
-# عينة كبيرة، تأثير صغير
-np.random.seed(42)
-control_large = np.random.normal(100, 15, 10000)
-treatment_large = np.random.normal(101, 15, 10000)  # فقط 1% فرق
-
-t_stat, p_value = stats.ttest_ind(control_large, treatment_large)
-print(f"p-value: {p_value:.2e}")  # صغيرة جداً!
-print(f"Mean difference: {np.mean(treatment_large) - np.mean(control_large):.2f}")
-print(f"Effect size (Cohen's d): {(np.mean(treatment_large) - np.mean(control_large)) / np.std(control_large):.3f}")
-
-# عينة صغيرة، تأثير كبير
-control_small = np.random.normal(100, 15, 5)
-treatment_small = np.random.normal(200, 15, 5)  # 100% فرق
-
-t_stat2, p_value2 = stats.ttest_ind(control_small, treatment_small)
-print(f"\np-value: {p_value2:.3f}")  # غير معنوي!
-print(f"Mean difference: {np.mean(treatment_small) - np.mean(control_small):.2f}")
-```
-
-**أبلغ دائماً**:
-- حجم التأثير (تغيير fold، Cohen's d، إلخ.)
-- فترات الثقة
-- السياق البيولوجي
-
-### 8.3 الازدواجية الزائفة
-
-**المشكلة**: معاملة النسخ التقنية كنسخ بيولوجية
-
-```python
-# خطأ: 3 فئران، 5 قياسات لكل منها، تحليل كـ n=15
-biological_replicates = 3
-technical_replicates = 5
-
-# صحيح: متوسط النسخ التقنية أولاً
-mouse1_tech = [98, 102, 100, 99, 101]
-mouse2_tech = [145, 148, 146, 147, 149]
-mouse3_tech = [97, 99, 98, 100, 96]
-
-# متوسط النسخ التقنية
-mouse1_avg = np.mean(mouse1_tech)
-mouse2_avg = np.mean(mouse2_tech)
-mouse3_avg = np.mean(mouse3_tech)
-
-print(f"Biological n = {biological_replicates}")
-print(f"Mouse averages: {[mouse1_avg, mouse2_avg, mouse3_avg]}")
-```
-
-### 8.4 التحيز في النشر ومشكلة درج الملفات
-
-**المشكلة**: فقط النتائج "المعنوية" يتم نشرها
-
-**التأثير**: الأدبيات تبالغ في تقدير أحجام التأثير والدلالة
-
-**الحلول**:
-- التسجيل المسبق للدراسات
-- نشر النتائج الصفرية
-- التحليلات التلوية
-- دراسات التكرار
-
----
-
-## 9. مثال عملي: التعبير التفاضلي لـ RNA-seq
-
-### 9.1 تحليل RNA-seq المحاكى
-
-```python
-import numpy as np
-import pandas as pd
-from scipy import stats
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-# محاكاة بيانات عدد RNA-seq
-np.random.seed(42)
-n_genes = 5000
-n_samples = 6  # 3 تحكم، 3 علاج
-
-# توليد مستويات التعبير الأساسية
-baseline = np.random.negative_binomial(n=10, p=0.5, size=n_genes)
-
-# عينات التحكم
-control_counts = np.random.poisson(baseline[:, np.newaxis], size=(n_genes, 3))
-
-# عينات العلاج (200 جين منظم للأعلى 3 أضعاف، 200 منظم للأسفل 3 أضعاف)
-treatment_baseline = baseline.copy()
-up_genes = np.random.choice(n_genes, 200, replace=False)
-down_genes = np.random.choice([i for i in range(n_genes) if i not in up_genes], 200, replace=False)
-treatment_baseline[up_genes] *= 3
-treatment_baseline[down_genes] //= 3
-
-treatment_counts = np.random.poisson(treatment_baseline[:, np.newaxis], size=(n_genes, 3))
-
-# دمج في dataframe
-count_df = pd.DataFrame({
-    'C1': control_counts[:, 0],
-    'C2': control_counts[:, 1],
-    'C3': control_counts[:, 2],
-    'T1': treatment_counts[:, 0],
-    'T2': treatment_counts[:, 1],
-    'T3': treatment_counts[:, 2]
-})
-count_df.index = [f'Gene_{i}' for i in range(n_genes)]
-
-print("RNA-seq Count Matrix (first 10 genes):")
-print(count_df.head(10))
-```
-
-### 9.2 اختبار التعبير التفاضلي
-
-```python
-# نهج اختبار t البسيط (للتوضيح - استخدم DESeq2 في الممارسة!)
-p_values = []
-fold_changes = []
-
-for gene in count_df.index:
-    control_vals = count_df.loc[gene, ['C1', 'C2', 'C3']].values
-    treatment_vals = count_df.loc[gene, ['T1', 'T2', 'T3']].values
-
-    # اختبار t
-    _, p = stats.ttest_ind(control_vals, treatment_vals)
-    p_values.append(p)
-
-    # تغيير Fold (أضف pseudocount لتجنب القسمة على صفر)
-    fc = (np.mean(treatment_vals) + 1) / (np.mean(control_vals) + 1)
-    fold_changes.append(np.log2(fc))
-
-# إضافة إلى dataframe
-count_df['pvalue'] = p_values
-count_df['log2FC'] = fold_changes
-count_df['mean_control'] = count_df[['C1', 'C2', 'C3']].mean(axis=1)
-count_df['mean_treatment'] = count_df[['T1', 'T2', 'T3']].mean(axis=1)
-
-# تطبيق تصحيح FDR
-from statsmodels.stats.multitest import multipletests
-_, count_df['padj'], _, _ = multipletests(count_df['pvalue'], method='fdr_bh')
-
-# ملخص
-print(f"\nTotal genes tested: {n_genes}")
-print(f"Significant (p < 0.05, uncorrected): {sum(count_df['pvalue'] < 0.05)}")
-print(f"Significant (FDR < 0.05): {sum(count_df['padj'] < 0.05)}")
-print(f"Upregulated (FDR < 0.05, FC > 2): {sum((count_df['padj'] < 0.05) & (count_df['log2FC'] > 1))}")
-print(f"Downregulated (FDR < 0.05, FC < 0.5): {sum((count_df['padj'] < 0.05) & (count_df['log2FC'] < -1))}")
-```
-
-### 9.3 التصور
-
-```python
-# رسم البركان
-fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-# الرسم 1: قيم p غير مصححة
-ax = axes[0]
-sig_uncorrected = count_df['pvalue'] < 0.05
-ax.scatter(count_df.loc[~sig_uncorrected, 'log2FC'],
-           -np.log10(count_df.loc[~sig_uncorrected, 'pvalue']),
-           c='gray', alpha=0.3, s=10, label='Not significant')
-ax.scatter(count_df.loc[sig_uncorrected, 'log2FC'],
-           -np.log10(count_df.loc[sig_uncorrected, 'pvalue']),
-           c='red', alpha=0.6, s=10, label='p < 0.05')
-ax.axhline(-np.log10(0.05), color='blue', linestyle='--', linewidth=2)
-ax.axvline(-1, color='green', linestyle='--', linewidth=1)
-ax.axvline(1, color='green', linestyle='--', linewidth=1)
-ax.set_xlabel('Log2 Fold Change')
-ax.set_ylabel('-Log10(p-value)')
-ax.set_title('Without Multiple Testing Correction')
-ax.legend()
-ax.grid(True, alpha=0.3)
-
-# الرسم 2: FDR-مصحح
-ax = axes[1]
-sig_fdr = count_df['padj'] < 0.05
-ax.scatter(count_df.loc[~sig_fdr, 'log2FC'],
-           -np.log10(count_df.loc[~sig_fdr, 'padj']),
-           c='gray', alpha=0.3, s=10, label='Not significant')
-ax.scatter(count_df.loc[sig_fdr, 'log2FC'],
-           -np.log10(count_df.loc[sig_fdr, 'padj']),
-           c='red', alpha=0.6, s=10, label='FDR < 0.05')
-ax.axhline(-np.log10(0.05), color='blue', linestyle='--', linewidth=2)
-ax.axvline(-1, color='green', linestyle='--', linewidth=1)
-ax.axvline(1, color='green', linestyle='--', linewidth=1)
-ax.set_xlabel('Log2 Fold Change')
-ax.set_ylabel('-Log10(adjusted p-value)')
-ax.set_title('With FDR Correction (Benjamini-Hochberg)')
-ax.legend()
-ax.grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('rnaseq_volcano_comparison.png', dpi=150, bbox_inches='tight')
-plt.show()
-
-print(f"\nFalse positive reduction: {sum(sig_uncorrected) - sum(sig_fdr)} genes")
-```
-
----
-
-## 10. قائمة التقييم الذاتي
+## 8. قائمة التقييم الذاتي
 
 اختبر فهمك:
 
-- [ ] يمكنني حساب المتوسط، الوسيط، التباين، والانحراف المعياري
-- [ ] أفهم الفرق بين SD و SEM
-- [ ] يمكنني تحديد التوزيعات الاحتمالية المناسبة لأنواع البيانات المختلفة
-- [ ] أعرف متى أستخدم اختبارات t مقابل الاختبارات اللامعلمية
-- [ ] أفهم ما تعنيه قيمة p بالفعل (وما لا تعنيه)
-- [ ] يمكنني تطبيق تصحيح الاختبارات المتعددة (Bonferroni، FDR)
-- [ ] أعرف كيفية حساب القوة الإحصائية وأحجام العينات المطلوبة
-- [ ] يمكنني إنشاء رسوم بيانية، رسوم صندوقية، ورسوم بركانية
-- [ ] أفهم مشكلة الاختبارات المتعددة في علم الجينوم
-- [ ] يمكنني التعرف على p-hacking والمزالق الإحصائية الأخرى
-- [ ] أعرف الفرق بين الدلالة الإحصائية والبيولوجية
-- [ ] يمكنني إجراء تحليل أساسي للتعبير التفاضلي لـ RNA-seq
+- [ ] أستطيع شرح الفرق بين المحاذاة الشاملة والمحلية
+- [ ] أفهم كيف تملأ البرمجة الديناميكية مصفوفة التسجيل
+- [ ] أستطيع حساب عقوبات الفجوات باستخدام نموذج الفجوة التآلفية
+- [ ] أعرف متى أستخدم BLOSUM62 مقابل BLOSUM45
+- [ ] أفهم لماذا BLAST أسرع من Smith-Waterman
+- [ ] أستطيع تفسير قيم E واختيار العتبات المناسبة
+- [ ] أعرف الفرق بين blastp و blastx و tblastn
+- [ ] أستطيع تشغيل محاذاة تسلسلات متعددة باستخدام MUSCLE أو ClustalW
+- [ ] أفهم كيف تعمل المحاذاة التدريجية
+- [ ] أستطيع بناء شجرة فيلوجينية من التسلسلات المحاذاة
+- [ ] أعرف متى أستخدم الطرق القائمة على المسافة مقابل الطرق القائمة على الحروف
+- [ ] أستطيع تقييم جودة المحاذاة وتحديد المناطق المحفوظة
+- [ ] أفهم تعقيد الوقت/المساحة لكل خوارزمية
+- [ ] أستطيع اختيار الأداة المناسبة لمهمة معينة
 
 ---
 
-## 11. موارد إضافية
+## 9. موارد إضافية
 
-### قراءات موصى بها
+### الأدوات الموصى بها
 
-| المورد | التركيز | الرابط |
-|----------|-------|-----|
-| **Modern Statistics for Modern Biology** | إحصاءات المعلوماتية الحيوية (مجاني) | https://www.huber.embl.de/msmb/ |
-| **StatQuest Videos** | شروحات بديهية | قناة YouTube |
-| **Nature Methods: Points of Significance** | إحصاءات عملية | سلسلة مجلة Nature |
-| **The Analysis of Biological Data** | أمثلة بيولوجية | كتاب Whitlock & Schluter |
+| الأداة | الغرض | URL |
+|------|---------|-----|
+| NCBI BLAST | بحث تسلسل عبر الويب | https://blast.ncbi.nlm.nih.gov/ |
+| MUSCLE | محاذاة متعددة سريعة | https://www.ebi.ac.uk/Tools/msa/muscle/ |
+| MAFFT | MSA واسعة النطاق | https://mafft.cbrc.jp/alignment/software/ |
+| Jalview | تصور المحاذاة | http://www.jalview.org/ |
+| MEGA | تحليل فيلوجيني | https://www.megasoftware.net/ |
 
-### البرمجيات والحزم
+### قراءة إضافية
 
-**Python**:
-```python
-# الإحصاء الأساسي
-import scipy.stats
-import numpy as np
-import pandas as pd
-
-# التصور
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-# الاختبارات المتعددة
-from statsmodels.stats.multitest import multipletests
-
-# تحليل القوة
-from statsmodels.stats.power import ttest_power
-```
-
-**R (البديل)**:
-```r
-# أفضل لتحليل RNA-seq
-library(DESeq2)  # RNA-seq DE
-library(edgeR)   # RNA-seq DE
-library(ggplot2) # التصور
-library(dplyr)   # معالجة البيانات
-```
+1. **Altschul et al. (1990)** - ورقة BLAST الأصلية
+2. **Needleman & Wunsch (1970)** - خوارزمية المحاذاة الشاملة
+3. **Smith & Waterman (1981)** - خوارزمية المحاذاة المحلية
+4. **Edgar (2004)** - خوارزمية MUSCLE
+5. **Katoh & Standley (2013)** - استراتيجيات MAFFT
 
 ### المفاهيم الرئيسية للتذكر
 
-!!! summary "ملخص الفصل 5"
-    **التباين حتمي**: التباين البيولوجي والتقني يتطلب تفكيراً إحصائياً
+!!! summary "ملخص الفصل 4"
+    **البرمجة الديناميكية**: تضمن المحاذاة المثلى لكن بتعقيد O(mn)
 
-    **قيم P ليست كل شيء**: أبلغ عن أحجام التأثير وفترات الثقة
+    **الاستدلال (BLAST)**: التضحية بالأمثلية للسرعة باستخدام استراتيجية البذور والتمديد
 
-    **الاختبارات المتعددة تقتل**: طبق دائماً تصحيح FDR للبيانات عالية الإنتاجية
+    **المحاذاة المتعددة**: الطرق التدريجية (ClustalW, MUSCLE) للنشوء والتطور العملي
 
-    **القوة مهمة**: الدراسات ضعيفة القوة تهدر الموارد ولا تجد شيئاً
+    **الأهمية الإحصائية**: قيم E تقيس احتمال التشابه بالصدفة
 
-    **تصور أولاً**: انظر إلى بياناتك قبل تطبيق الاختبارات الإحصائية
+    **اختيار الأداة**: التوازن بين الدقة والسرعة وخصائص التسلسل
 
 ---
 
@@ -1226,13 +1166,13 @@ library(dplyr)   # معالجة البيانات
 
 **الفصول ذات الصلة:**
 
-- [الفصل 2: أساسيات البرمجة](/ar/courses/foundation-of-bioinformatics/module-2/) - Python للحوسبة الإحصائية
-- [الفصل 3: قواعد البيانات البيولوجية](/ar/courses/foundation-of-bioinformatics/module-3/) - استرجاع البيانات للتحليل
-- [الفصل 4: محاذاة التسلسل](/ar/courses/foundation-of-bioinformatics/module-4/) - قيم E والدلالة
+- [الفصل 2: أساسيات البرمجة](/ar/courses/foundation-of-bioinformatics/module-2/) - أساسيات Python و Biopython
+- [الفصل 3: قواعد البيانات البيولوجية](/ar/courses/foundation-of-bioinformatics/module-3/) - الوصول إلى قواعد البيانات لـ BLAST
+- [الفصل 5: التحليل الإحصائي](/ar/courses/foundation-of-bioinformatics/module-5/) - الإحصاء لقيم E
 
 ---
 
-🌐 [عرض هذا الفصل بالإنجليزية](/en/courses/foundation-of-bioinformatics/module-5/)
+🌐 [عرض هذا الفصل بالإنجليزية](/en/courses/foundation-of-bioinformatics/module-4/)
 
 ---
 
