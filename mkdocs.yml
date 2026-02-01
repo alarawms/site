@@ -207,3 +207,24 @@ extra:
     - name: English
       link: /en/
       lang: en
+
+  # Comments system - Giscus (GitHub Discussions)
+  # To get repo_id and category_id:
+  # 1. Enable Discussions on GitHub (Settings > Features > Discussions)
+  # 2. Install giscus app: https://github.com/apps/giscus
+  # 3. Visit: https://giscus.app/ar
+  # 4. Enter: alarawms/site
+  # 5. Copy the data-repo-id and data-category-id values
+  comments:
+    provider: giscus
+    repo: alarawms/site
+    repo_id: REPLACE_WITH_YOUR_REPO_ID  # Get from https://giscus.app/ar
+    category: General
+    category_id: REPLACE_WITH_YOUR_CATEGORY_ID  # Get from https://giscus.app/ar
+    reactions_enabled: true
+    input_position: bottom
+    theme:
+      light: light
+      dark: dark
+    lang: ar  # Arabic by default, auto-detects from page language
+    loading: lazy
