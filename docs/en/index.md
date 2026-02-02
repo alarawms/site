@@ -1,3 +1,7 @@
+---
+draft: true
+---
+
 # English Version
 
 Welcome to the English version of this bioinformatics documentation site.

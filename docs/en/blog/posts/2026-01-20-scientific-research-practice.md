@@ -1,7 +1,7 @@
 ---
 title: Scientific Research as an Effective Practice
 date: 2026-01-20
-draft: false
+draft: true
 categories:
   - Research
   - Methodology

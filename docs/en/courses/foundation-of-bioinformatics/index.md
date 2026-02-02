@@ -1,3 +1,7 @@
+---
+draft: true
+---
+
 # Foundations in Bioinformatics
 
 **Building the essential skills for computational biology**

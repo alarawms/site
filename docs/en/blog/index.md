@@ -1,3 +1,7 @@
+---
+draft: true
+---
+
 # Blog
 
 Welcome to my blog on bioinformatics, computational biology, and scientific research.
