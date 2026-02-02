@@ -1,0 +1,10 @@
+BRCA1	breast cancer 1	tumor suppressor
+TP53	tumor protein p53	cell cycle regulation
+EGFR	epidermal growth factor receptor	cell proliferation
+MYC	myelocytomatosis oncogene	transcription factor
+KRAS	Kirsten rat sarcoma viral oncogene	signal transduction
+BRCA2	breast cancer 2	DNA repair
+APC	adenomatous polyposis coli	tumor suppressor
+PTEN	phosphatase and tensin homolog	cell growth
+RB1	retinoblastoma 1	cell cycle
+VHL	von Hippel-Lindau	oxygen sensing
