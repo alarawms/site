@@ -189,8 +189,8 @@ nav:
           - نظرة عامة: courses/foundation-of-bioinformatics/index.md
           - الفصل 1 - البيانات الحيوية: courses/foundation-of-bioinformatics/module-1.md
           - الفصل 2 - أساسيات Linux: courses/foundation-of-bioinformatics/module-2.md
+          - الفصل 3 - البرمجة: courses/foundation-of-bioinformatics/module-3.md
           # الفصول التالية قيد المراجعة - سيتم نشرها لاحقاً
-          # - الفصل 3 - البرمجة: courses/foundation-of-bioinformatics/module-3.md
           # - الفصل 4 - قواعد البيانات: courses/foundation-of-bioinformatics/module-4.md
           # - الفصل 5 - الخوارزميات: courses/foundation-of-bioinformatics/module-5.md
           # - الفصل 6 - الإحصاء: courses/foundation-of-bioinformatics/module-6.md
