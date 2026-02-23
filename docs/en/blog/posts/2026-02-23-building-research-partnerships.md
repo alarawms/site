@@ -18,9 +18,9 @@ authors:
 
 ## Why Partnership, Not Competition?
 
-In the name of God, and peace and blessings upon the teacher of all good to mankind.
+In the name of God, and peace and blessings upon the prophet Mohammed, whom taught all good to mankind.
 
-In research institutes, success is often reduced to the number of published papers, secured grants, or praise received. But there is a deeper and more important question: **Can you build something lasting on your own?** The answer, more often than not — no. Major research achievements have never been the product of isolated individual effort; they have always been the fruit of deliberate partnerships built on mutual benefit and shared vision.
+In research institutes, success is often reduced to the number of published papers, secured grants, or awards received. But there is a deeper and more important question: **Can you build something lasting on your own?** The answer, more often than not — no. Major research achievements have never been the product of isolated individual effort; they have always been the fruit of deliberate partnerships built on mutual benefit and shared vision.
 
 In this article, I share a practical model for building research partnerships — one that is not based on competition and control, but on **joint effort, mutual gain, and diplomacy in engagement.**
 
@@ -198,24 +198,3 @@ Building partnerships in research institutes is an art that combines science and
 
 ---
 
-## LinkedIn Summary
-
-!!! note "Short Version for LinkedIn"
-
-    **The Art of Building Partnerships in Research Institutes**
-
-    After years of working in diverse research environments, I've reached a conviction: major achievements are not built through individual effort alone.
-
-    My model for building partnerships rests on five pillars:
-
-    🔹 **Mutual benefit** — any partnership that doesn't serve both sides will not last
-    🔹 **Winning doesn't mean the other side loses** — success is not zero-sum
-    🔹 **Know your style** — flexibility in engagement is the key to collaboration
-    🔹 **Achievement, not show** — chasing credit alone bears no fruit
-    🔹 **Diplomacy and vision** — partnerships are strategic projects, not passing agreements
-
-    Shared credit does not diminish — it multiplies. And real achievement speaks for itself.
-
-    📖 Full article: malarawi.sa/en/blog/building-research-partnerships/
-
-    #ResearchPartnerships #ScientificCollaboration #Vision2030 #ResearchLeadership #ScienceDiplomacy
