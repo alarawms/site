@@ -1,3 +1,18 @@
+/* Global font size increase (+4pt) */
+:root {
+  --md-typeset-font-size: 1.13rem;
+}
+
+/* Increase Mermaid diagram font size */
+.mermaid {
+  font-size: 1.13rem !important;
+}
+.mermaid .nodeLabel,
+.mermaid .edgeLabel,
+.mermaid .label {
+  font-size: 1.13rem !important;
+}
+
 /* Language-Specific Direction Handling for Bilingual Site */
 /* Arabic is primary (root level) - RTL by default */
 /* English is secondary (/en/) - LTR via JavaScript */
