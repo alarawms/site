@@ -1,5 +1,6 @@
 site_name: العلوم والبحث والتطوير بشكل مجرّد
 site_url: https://malarawi.sa/
+dev_addr: 127.0.0.1:8100
 site_description: توثيق شامل للمعلوماتية الحيوية وعلم البيانات الحيوي
 site_author: Mohammed S
 
