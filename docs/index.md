@@ -59,7 +59,7 @@ hide:
       <li><strong>✅ الفصل 1:</strong> البيانات الحيوية - من الجزيئات إلى المعلومات <span style="color: #009688;">(متاح الآن)</span></li>
       <li><strong>✅ الفصل 2:</strong> أساسيات Linux - بيئة العمل الأساسية <span style="color: #009688;">(متاح الآن)</span></li>
       <li><strong>✅ الفصل 3:</strong> أساسيات البرمجة - Python للمعلوماتية الحيوية <span style="color: #009688;">(متاح الآن)</span></li>
-      <li><strong>🔜 الفصل 4:</strong> قواعد البيانات البيولوجية - الوصول البرمجي للبيانات <span style="color: #757575;">(قريباً)</span></li>
+      <li><strong>✅ الفصل 4:</strong> قواعد البيانات البيولوجية - الوصول البرمجي للبيانات <span style="color: #009688;">(متاح الآن)</span></li>
       <li><strong>🔜 الفصل 5:</strong> محاذاة التسلسلات - خوارزميات المحاذاة <span style="color: #757575;">(قريباً)</span></li>
       <li><strong>🔜 الفصل 6:</strong> الإحصاء - التحليل الإحصائي للجينوم <span style="color: #757575;">(قريباً)</span></li>
     </ul>
